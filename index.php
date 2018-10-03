@@ -39,12 +39,12 @@ $page2 = array(
 if ($_SESSION['fonction'] == "Comptable") {
     $page1 = array(
         "titre" => "Valider les fiches de frais",
-        "lien" => "",
+        "lien" => "index.php?uc=validerFrais&action=selectionnerVisiteur",
         "icone" => ""
     );
     $page2 = array(
         "titre" => "Suivre le paiement des fiches de frais",
-        "lien" => "",
+        "lien" => "index.php?uc=suivreFiches&action=",
         "icone" => ""
     );
 }
