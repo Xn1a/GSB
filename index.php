@@ -39,12 +39,12 @@ $page2 = array(
 if ($_SESSION['fonction'] == "Comptable") {
     $page1 = array(
         "titre" => "Valider les fiches de frais",
-        "lien" => "index.php?uc=gererFrais&action=saisirFrais",
+        "lien" => "",
         "icone" => ""
     );
     $page2 = array(
         "titre" => "Suivre le paiement des fiches de frais",
-        "lien" => "index.php?uc=etatFrais&action=selectionnerMois",
+        "lien" => "",
         "icone" => ""
     );
 }
@@ -74,6 +74,12 @@ switch ($uc) {
         break;
     case 'deconnexion':
         include 'controleurs/c_deconnexion.php';
+        break;
+    case 'validerFrais':
+        include 'controleurs/c_validerFrais.php';
+        break;
+    case 'suivreFiches':
+        include 'controleurs/c_suivreFiches.php';
         break;
 }
 require 'vues/v_pied.php';
