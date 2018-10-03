@@ -17,6 +17,7 @@
 require_once 'includes/fct.inc.php';
 require_once 'includes/class.pdogsb.inc.php';
 session_start();
+
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
 require 'vues/v_entete.php';
@@ -26,6 +27,8 @@ if ($uc && !$estConnecte) {
 } elseif (empty($uc)) {
     $uc = 'accueil';
 }
+
+// Routes
 switch ($uc) {
 case 'connexion':
     include 'controleurs/c_connexion.php';
