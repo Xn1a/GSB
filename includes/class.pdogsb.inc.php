@@ -137,6 +137,22 @@ class PdoGsb
     }
 
     /**
+     * Retourne tous les visiteurs sous forme d'un tableau
+     *
+     * @return tous les visiteurs
+     */
+    public function getLesVisiteurs()
+    {
+        $requetePrepare = PdoGsb::$monPdo->prepare(
+            'SELECT nom, prenom FROM utilisateur '
+                . 'WHERE fonction = 0 '
+        );
+        $requetePrepare->execute();
+        $lesLignes = $requetePrepare->fetchAll();
+        return $lesLignes;
+    }
+
+    /**
      * Retourne le nombre de justificatif d'un visiteur pour un mois donné
      *
      * @param String $idVisiteur ID du visiteur
