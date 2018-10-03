@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Index du projet GSB
  *
@@ -20,7 +21,32 @@ session_start();
 
 $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
+
+// Affiche les liens vers les pages associées à la fonction de l'utilisateur
+// Si Visiteur
+$page1 = array(
+    "titre" => "Renseigner la fiche de frais",
+    "lien" => "index.php?uc=gererFrais&action=saisirFrais"
+);
+$page2 = array(
+    "titre" => "Afficher mes fiches de frais",
+    "lien" => "index.php?uc=etatFrais&action=selectionnerMois"
+);
+
+// Si comptable
+if ($_SESSION['fonction'] == "Comptable") {
+    $page1 = array(
+        "titre" => "Valider les fiches de frais",
+        "lien" => "index.php?uc=gererFrais&action=saisirFrais"
+    );
+    $page2 = array(
+        "titre" => "Suivre le paiement des fiches de frais",
+        "lien" => "index.php?uc=etatFrais&action=selectionnerMois"
+    );
+}
+
 require 'vues/v_entete.php';
+
 $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);
 if ($uc && !$estConnecte) {
     $uc = 'connexion';
@@ -30,20 +56,20 @@ if ($uc && !$estConnecte) {
 
 // Routes
 switch ($uc) {
-case 'connexion':
-    include 'controleurs/c_connexion.php';
-    break;
-case 'accueil':
-    include 'controleurs/c_accueil.php';
-    break;
-case 'gererFrais':
-    include 'controleurs/c_gererFrais.php';
-    break;
-case 'etatFrais':
-    include 'controleurs/c_etatFrais.php';
-    break;
-case 'deconnexion':
-    include 'controleurs/c_deconnexion.php';
-    break;
+    case 'connexion':
+        include 'controleurs/c_connexion.php';
+        break;
+    case 'accueil':
+        include 'controleurs/c_accueil.php';
+        break;
+    case 'gererFrais':
+        include 'controleurs/c_gererFrais.php';
+        break;
+    case 'etatFrais':
+        include 'controleurs/c_etatFrais.php';
+        break;
+    case 'deconnexion':
+        include 'controleurs/c_deconnexion.php';
+        break;
 }
 require 'vues/v_pied.php';

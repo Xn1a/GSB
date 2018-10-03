@@ -50,15 +50,15 @@
                                 </a>
                             </li>
                             <li <?php if ($uc == 'gererFrais') { ?>class="active"<?php } ?>>
-                                <a href="index.php?uc=gererFrais&action=saisirFrais">
+                                <a href="<?php echo $page1['lien'] ?>">
                                     <span class="glyphicon glyphicon-pencil"></span>
-                                    Renseigner la fiche de frais
+                                    <?php echo $page1['titre'] ?>
                                 </a>
                             </li>
                             <li <?php if ($uc == 'etatFrais') { ?>class="active"<?php } ?>>
-                                <a href="index.php?uc=etatFrais&action=selectionnerMois">
+                                <a href="<?php echo $page2['lien'] ?>">
                                     <span class="glyphicon glyphicon-list-alt"></span>
-                                    Afficher mes fiches de frais
+                                    <?php echo $page2['titre'] ?>
                                 </a>
                             </li>
                             <li 
