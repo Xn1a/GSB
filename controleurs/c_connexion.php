@@ -35,7 +35,13 @@ case 'valideConnexion':
         $id = $utilisateur['id'];
         $nom = $utilisateur['nom'];
         $prenom = $utilisateur['prenom'];
-        $fonction = $utilisateur['fonction'];
+
+        // Met le nom de la fonction de l'utilisateur dans la session
+        $fonction = "Visiteur";
+        if ($utilisateur['fonction'] == 1) {
+            $fonction = "Comptable";
+        }
+
         connecter($id, $nom, $prenom, $fonction);
         header('Location: index.php');
     }
