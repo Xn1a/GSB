@@ -26,22 +26,26 @@ $estConnecte = estConnecte();
 // Si Visiteur
 $page1 = array(
     "titre" => "Renseigner la fiche de frais",
-    "lien" => "index.php?uc=gererFrais&action=saisirFrais"
+    "lien" => "index.php?uc=gererFrais&action=saisirFrais",
+    "icone" => "glyphicon-pencil"
 );
 $page2 = array(
     "titre" => "Afficher mes fiches de frais",
-    "lien" => "index.php?uc=etatFrais&action=selectionnerMois"
+    "lien" => "index.php?uc=etatFrais&action=selectionnerMois",
+    "icone" => "glyphicon-list-alt"
 );
 
 // Si comptable
 if ($_SESSION['fonction'] == "Comptable") {
     $page1 = array(
         "titre" => "Valider les fiches de frais",
-        "lien" => "index.php?uc=gererFrais&action=saisirFrais"
+        "lien" => "index.php?uc=gererFrais&action=saisirFrais",
+        "icone" => ""
     );
     $page2 = array(
         "titre" => "Suivre le paiement des fiches de frais",
-        "lien" => "index.php?uc=etatFrais&action=selectionnerMois"
+        "lien" => "index.php?uc=etatFrais&action=selectionnerMois",
+        "icone" => ""
     );
 }
 
