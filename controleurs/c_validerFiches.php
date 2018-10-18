@@ -16,11 +16,16 @@
  */
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
-switch ($action) {
-    case 'selectionnerVisiteur':
-        $lesVisiteurs = $pdo->getLesVisiteurs();
-        break;
-}
 
+$lesVisiteurs = $pdo->getLesVisiteurs();
+$idVisiteur = null;
+
+if ($action == "selectionnerMois") {
+    $idVisiteur = filter_input(INPUT_POST, 'lstVisiteurs', FILTER_SANITIZE_STRING);
+}
 require 'vues/v_listeVisiteurs.php';
-require 'vues/v_listeMoisComptables.php';
+
+if ($action == "selectionnerMois") {
+    $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+    include 'vues/v_listeMoisComptables.php';
+}
