@@ -17,18 +17,23 @@
 ?>
 <div class="row">
     <div class="col-md-4">
-        <form action="" 
+        <form action="index.php?uc=validerFiches&action=selectionnerMois" 
               method="post" role="form">
             <div class="form-group">
                 <label for="lstVisiteurs" accesskey="n">Choisir le visiteur : </label>
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
                     <?php foreach ($lesVisiteurs as $unVisiteur) { ?>
-                        <option value="<?php echo $unVisiteur['login'] ?>">
+                        <option value="<?php echo $unVisiteur['id'] ?>" 
+                        <?php if ($idVisiteur == $unVisiteur['id']) { ?>
+                           selected
+                        <?php } ?> >
                         <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
                         </option>
                     <?php } ?>    
                 </select>
             </div>
+            <input id="ok" type="submit" value="Choisir" class="btn btn-success"
+            role="button">
         </form>
     </div>
 </div>

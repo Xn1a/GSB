@@ -20,6 +20,8 @@
     <form action="index.php?uc=etatFrais&action=voirEtatFrais"
         method="post" role="form">
         <?php require 'v_listeMois.php';?>
+        <input id="ok" type="submit" value="Consulter" class="btn btn-success"
+            role="button">
     </form>
 </div>
 
