@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Validation d'une fiche de frais
+ * Vue Liste des mois
  *
  * PHP Version 7
  *
@@ -14,13 +14,13 @@
  * @version   GIT: <0>
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
+?>
 
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
-switch ($action) {
-    case 'selectionnerVisiteur':
-        $lesVisiteurs = $pdo->getLesVisiteurs();
-        break;
-}
+<div class="col-md-4">
+    <form action="index.php?uc=etatFrais&action=voirEtatFrais"
+        method="post" role="form">
+        <?php require 'v_listeMois.php';?>
+    </form>
+</div>
 
-require 'vues/v_listeVisiteurs.php';
-require 'vues/v_listeMoisComptables.php';
+

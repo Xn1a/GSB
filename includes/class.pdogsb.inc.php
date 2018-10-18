@@ -144,7 +144,7 @@ class PdoGsb
     public function getLesVisiteurs()
     {
         $requetePrepare = PdoGsb::$monPdo->prepare(
-            'SELECT nom, prenom FROM utilisateur '
+            'SELECT id, nom, prenom FROM utilisateur '
                 . 'WHERE fonction = 0 '
         );
         $requetePrepare->execute();
