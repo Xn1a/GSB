@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Validation d'une fiche de frais
  *
@@ -16,9 +17,9 @@
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 switch ($action) {
-case 'selectionnerVisiteur':
-    $lesVisiteurs = $pdo->getLesVisiteurs();
-    break;
+    case 'selectionnerVisiteur':
+        $lesVisiteurs = $pdo->getLesVisiteurs();
+        break;
 }
 
 require 'vues/v_listeVisiteurs.php';
