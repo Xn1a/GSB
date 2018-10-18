@@ -39,7 +39,7 @@ $page2 = array(
 if ($_SESSION['fonction'] == "Comptable") {
     $page1 = array(
         "titre" => "Valider les fiches de frais",
-        "lien" => "index.php?uc=validerFrais&action=selectionnerVisiteur",
+        "lien" => "index.php?uc=validerFiches&action=selectionnerVisiteur",
         "icone" => ""
     );
     $page2 = array(
@@ -75,8 +75,8 @@ switch ($uc) {
     case 'deconnexion':
         include 'controleurs/c_deconnexion.php';
         break;
-    case 'validerFrais':
-        include 'controleurs/c_validerFrais.php';
+    case 'validerFiches':
+        include 'controleurs/c_validerFiches.php';
         break;
     case 'suivreFiches':
         include 'controleurs/c_suivreFiches.php';
