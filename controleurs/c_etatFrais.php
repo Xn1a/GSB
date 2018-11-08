@@ -24,7 +24,7 @@ case 'selectionnerMois':
     // les mois étant triés décroissants
     $lesCles = array_keys($lesMois);
     $moisASelectionner = $lesCles[0];
-    include 'vues/v_listeMois.php';
+    include 'vues/v_listeMoisVisiteurs.php';
     break;
 case 'voirEtatFrais':
     $leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
