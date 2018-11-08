@@ -27,12 +27,12 @@ $estConnecte = estConnecte();
 $page1 = array(
     "titre" => "Renseigner la fiche de frais",
     "lien" => "index.php?uc=gererFrais&action=saisirFrais",
-    "icone" => "glyphicon-pencil",
+    "icon" => "glyphicon-pencil",
 );
 $page2 = array(
     "titre" => "Afficher mes fiches de frais",
     "lien" => "index.php?uc=etatFrais&action=selectionnerMois",
-    "icone" => "glyphicon-list-alt",
+    "icon" => "glyphicon-list-alt",
 );
 
 // Si comptable
@@ -40,12 +40,12 @@ if ($_SESSION['fonction'] == "Comptable") {
     $page1 = array(
         "titre" => "Valider les fiches de frais",
         "lien" => "index.php?uc=validerFiches&action=selectionnerVisiteur",
-        "icone" => "",
+        "icon" => "glyphicon-ok",
     );
     $page2 = array(
         "titre" => "Suivre le paiement des fiches de frais",
         "lien" => "index.php?uc=suivreFiches&action=",
-        "icone" => "",
+        "icon" => "glyphicon-euro",
     );
 }
 

@@ -51,13 +51,13 @@
                             </li>
                             <li <?php if ($uc == 'gererFrais') { ?>class="active"<?php } ?>>
                                 <a href="<?php echo $page1['lien'] ?>">
-                                    <span class="glyphicon glyphicon-pencil"></span>
+                                    <span class="glyphicon <?php echo $page1['icon'] ?>"></span>
                                     <?php echo $page1['titre'] ?>
                                 </a>
                             </li>
                             <li <?php if ($uc == 'etatFrais') { ?>class="active"<?php } ?>>
                                 <a href="<?php echo $page2['lien'] ?>">
-                                    <span class="glyphicon glyphicon-list-alt"></span>
+                                    <span class="glyphicon <?php echo $page2['icon'] ?>"></span>
                                     <?php echo $page2['titre'] ?>
                                 </a>
                             </li>

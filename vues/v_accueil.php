@@ -36,11 +36,11 @@
                     <div class="col-xs-12 col-md-12">
                         <a href="<?php echo $page1['lien'] ?>"
                            class="btn btn-success btn-lg" role="button">
-                            <span class="glyphicon <?php echo $page1['icone'] ?>"></span>
+                            <span class="glyphicon <?php echo $page1['icon'] ?>"></span>
                             <br><?php echo $page1['titre'] ?></a>
                         <a href="<?php echo $page2['lien'] ?>"
                            class="btn btn-primary btn-lg" role="button">
-                            <span class="glyphicon <?php echo $page2['icone'] ?>"></span>
+                            <span class="glyphicon <?php echo $page2['icon'] ?>"></span>
                             <br><?php echo $page2['titre'] ?></a>
                     </div>
                 </div>
