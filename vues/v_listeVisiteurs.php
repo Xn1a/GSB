@@ -22,13 +22,19 @@
             <div class="form-group">
                 <label for="lstVisiteurs" accesskey="n">Choisir le visiteur : </label>
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
-                    <?php foreach ($lesVisiteurs as $unVisiteur) { ?>
-                        <option value="<?php echo $unVisiteur['id'] ?>" 
-                        <?php if ($idVisiteur == $unVisiteur['id']) { ?>
-                           selected
-                        <?php } ?> >
-                        <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
+                    <?php 
+                    foreach ($lesVisiteurs as $unVisiteur) { 
+                        if ($unVisiteur['id'] == $idVisiteurASelectionner) {
+                            ?>
+                        <option selected value="<?php echo $unVisiteur['id'] ?>">
+                            <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
                         </option>
+                        <?php } else { ?>
+                        <option value="<?php echo $unVisiteur['id'] ?>">
+                            <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
+                        </option>
+                        <?php } ?>
+                        
                     <?php } ?>    
                 </select>
             </div>
