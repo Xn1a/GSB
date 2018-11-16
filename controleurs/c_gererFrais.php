@@ -58,5 +58,12 @@ case 'supprimerFrais':
 }
 $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idUtilisateur, $mois);
 $lesFraisForfait = $pdo->getLesFraisForfait($idUtilisateur, $mois);
+
+// Pour visiteur
+$texteSubmit = "Ajouter";
+$texteReset = "Effacer";
+$titre = 'Renseigner la fiche de frais du mois ' . $numMois . '-' . $numAnnee;
+$actionFormulaire = "index.php?uc=gererFrais&action=validerMajFraisForfait";
+
 require 'vues/v_listeFraisForfait.php';
 require 'vues/v_listeFraisHorsForfait.php';
