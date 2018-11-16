@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="lstVisiteurs" accesskey="n">Choisir le visiteur : </label>
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
-                    <?php 
+                    <?php
                     foreach ($lesVisiteurs as $unVisiteur) { 
                         if ($unVisiteur['id'] == $idVisiteurASelectionner) {
                             ?>

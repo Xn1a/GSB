@@ -14,14 +14,14 @@
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
 ?>
-<div class="row">    
-    <h2>Renseigner ma fiche de frais du mois 
-        <?php echo $numMois . '-' . $numAnnee ?>
+<div class="row">  
+    <h2>
+        <?php echo $titre; ?>
     </h2>
     <h3>Eléments forfaitisés</h3>
     <div class="col-md-4">
         <form method="post" 
-              action="index.php?uc=gererFrais&action=validerMajFraisForfait" 
+              action="<?php echo $actionFormulaire ?>" 
               role="form">
             <fieldset>       
                 <?php
@@ -38,10 +38,11 @@
                                class="form-control">
                     </div>
                     <?php
-                }
-                ?>
-                <button class="btn btn-success" type="submit">Ajouter</button>
-                <button class="btn btn-danger" type="reset">Effacer</button>
+                } ?>
+                <input type="hidden" name="lstMois" value="<?php echo $fiche ?>">
+                <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur ?>">
+                <button class="btn btn-success" type="submit"><?php echo $texteSubmit ?></button>
+                <button class="btn btn-danger" type="reset"><?php echo $texteReset ?></button>
             </fieldset>
         </form>
     </div>

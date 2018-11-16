@@ -20,7 +20,7 @@
     <form action="index.php?uc=validerFiches&action=corrigerFrais"
         method="post" role="form">
         <?php require 'v_listeMois.php';?>
-        <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteur ?>">
+        <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur ?>">
         <input id="ok" type="submit" value="Consulter" class="btn btn-success"
             role="button">
     </form>
