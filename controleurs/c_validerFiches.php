@@ -45,24 +45,17 @@ switch ($action) {
         // Affiche les formulaires
         $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $fiche);
 
-        // Affichage en fonction de la fonction de l'utilisateur
-        // Si Visiteur
-        $texteSubmit = "Ajouter";
-        $texteReset = "Effacer";
-        $titre = 'Renseigner la fiche de frais du mois' . $numMois . '-' . $numAnnee;
-        $actionFormulaire = "index.php?uc=gererFrais&action=validerMajFraisForfait";
-        // Si comptable
-        if ($fonctionUtilisateur == "Comptable") {
-            $texteSubmit = "Corriger";
-            $texteReset = "Réinitialiser";
-            $titre = "Valider la fiche de frais";
-            $actionFormulaire = "index.php?uc=validerFiches&action=validerMajFraisForfait";
-        }
-
+        // Pour comptable
+        $texteSubmit = "Corriger";
+        $texteReset = "Réinitialiser";
+        $titre = "Valider la fiche de frais";
+        $actionFormulaire = "index.php?uc=validerFiches&action=validerMajFraisForfait";
         include 'vues/v_listeFraisForfait.php';
         echo "<hr/>";
-        // TODO : include les formulaire d'affichage et correction de la fiche
 
+        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $fiche);
+        $nombreJustificatifs = $pdo->getNbjustificatifs($idVisiteur, $fiche);
+        include 'vues/v_listeFraisHorsForfaitEditable.php';
         break;
 
     case 'validerMajFraisForfait':
@@ -88,5 +81,32 @@ switch ($action) {
         $actionFormulaire = "index.php?uc=validerFiches&action=validerMajFraisForfait";
         include 'vues/v_listeFraisForfait.php';
         echo "<hr/>";
+        break;
+
+    case 'corrigerFraisHorsForfait':
+        // Récupération des post
+        $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+        $fraisHorsForfait = filter_input(INPUT_POST, 'fraisHorsForfait', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+
+        // Edition du frais hors forfait
+        $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
+
+        // Récupérations des données nécessaires
+        $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+        $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $fiche);
+        $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $fiche);
+        $nombreJustificatifs = $pdo->getNbjustificatifs($idVisiteur, $fiche);
+
+        // Texte adapté aux utilisateurs comptables
+        $texteSubmit = "Corriger";
+        $texteReset = "Réinitialiser";
+        $titre = "Valider la fiche de frais";
+        $actionFormulaire = "index.php?uc=validerFiches&action=validerMajFraisForfait";
+
+        // Affichage des vues
+        include 'vues/v_listeMoisComptables.php';
+        include 'vues/v_listeFraisForfait.php';
+        include 'vues/v_listeFraisHorsForfaitEditable.php';
+
         break;
 }
