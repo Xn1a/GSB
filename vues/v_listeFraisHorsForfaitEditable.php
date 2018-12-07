@@ -22,21 +22,21 @@
             <thead>
                 <tr>
                     <th class="date">Date</th>
-                    <th class="libelle">Libellé</th>  
-                    <th class="montant">Montant</th>  
-                    <th class="action">&nbsp;</th> 
+                    <th class="libelle">Libellé</th>
+                    <th class="montant">Montant</th>
+                    <th class="action">&nbsp;</th>
                 </tr>
-            </thead>  
+            </thead>
             <tbody>
             <?php
-            foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
-                $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-                $date = $unFraisHorsForfait['date'];
-                $montant = $unFraisHorsForfait['montant'];
-                $id = $unFraisHorsForfait['id']; ?>           
+foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+    $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+    $date = $unFraisHorsForfait['date'];
+    $montant = $unFraisHorsForfait['montant'];
+    $id = $unFraisHorsForfait['id'];?>
                 <tr>
-                    <form method="post" 
-                    action="index.php?uc=validerFiches&action=corrigerFraisHorsForfait" 
+                    <form method="post"
+                    action="index.php?uc=validerFiches&action=corrigerFraisHorsForfait"
                     role="form">
                         <td><input class="form-control" type="text" name="fraisHorsForfait[date]" value="<?php echo $date ?>"></td>
                         <td><input class="form-control" type="text" name="fraisHorsForfait[libelle]" value="<?php echo $libelle ?>"></td>
@@ -51,13 +51,19 @@
                     </form>
                 </tr>
                 <?php
-            }
-            ?>
-            </tbody>  
+}
+?>
+            </tbody>
         </table>
     </div>
     <b>Nombre de justificatifs : </b>
     <input type="text" name="" id="" value="<?php echo $nombreJustificatifs; ?>">
-    <button class="btn btn-success" type="submit">Valider</button>
+    <form method="post"
+          action="index.php?uc=validerFiches&action=validerFiche"
+          role="form">
+          <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur; ?>">
+          <input type="hidden" name="lstMois" value="<?php echo $fiche; ?>">
+          <button class="btn btn-success" type="submit">Valider</button>
+    </form>
     <button class="btn btn-danger" type="reset">Réinitialiser</button>
 </div>

@@ -64,6 +64,10 @@ switch ($action) {
         $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
         afficherFrais($pdo, $idVisiteur, $fiche);
         break;
+    case 'validerFiche':
+    // Changement de l'état de la fiche
+    $pdo->majEtatFicheFrais($idVisiteur, $fiche, 'VA');
+        break;
 }
 
 /**
