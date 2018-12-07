@@ -1,4 +1,4 @@
-<?php
+<?php ob_start();
 
 /**
  * Index du projet GSB
@@ -23,7 +23,7 @@ $pdo = PdoGsb::getPdoGsb();
 $estConnecte = estConnecte();
 
 // Affiche les liens vers les pages en fonction de l'utilisateur
-// Si Visiteur
+// Si visiteur
 $page1 = array(
     "titre" => "Renseigner la fiche de frais",
     "lien" => "index.php?uc=gererFrais&action=saisirFrais",
@@ -83,3 +83,5 @@ switch ($uc) {
         break;
 }
 require 'vues/v_pied.php';
+
+ob_end_flush();
