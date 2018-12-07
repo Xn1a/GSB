@@ -17,7 +17,7 @@
 ?>
 
 <div class="col-md-4">
-    <form action="index.php?uc=validerFiches&action=corrigerFrais"
+    <form action="index.php?uc=validerFiches&action=afficherFiche"
         method="post" role="form">
         <?php require 'v_listeMois.php';?>
         <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur ?>">
