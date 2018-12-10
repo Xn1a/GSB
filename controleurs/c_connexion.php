@@ -36,7 +36,7 @@ case 'valideConnexion':
         $nom = $utilisateur['nom'];
         $prenom = $utilisateur['prenom'];
 
-        // Met le nom de la fonction de l'utilisateur dans la session
+        // Met la fonction de l'utilisateur dans la session
         $fonction = "Visiteur";
         if ($utilisateur['fonction'] == 1) {
             $fonction = "Comptable";

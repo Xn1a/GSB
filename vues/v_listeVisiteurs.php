@@ -20,7 +20,10 @@
         <form action="index.php?uc=validerFiches&action=selectionnerMois" 
               method="post" role="form">
             <div class="form-group">
-                <label for="lstVisiteurs" accesskey="n">Choisir le visiteur : </label>
+                <label for="lstVisiteurs" accesskey="n">Choisir un visiteur ou rechercher un nom : </label>
+                <input type="search" name="recherche" value="<?php echo $recherche; ?>" placeholder="Rechercher un nom..." class="form-control"
+                />
+                <br/> 
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
                     <?php
                     foreach ($lesVisiteurs as $unVisiteur) { 
@@ -40,6 +43,7 @@
             </div>
             <input id="ok" type="submit" value="Choisir" class="btn btn-success"
             role="button">
+            <input type="submit" value="Rechercher" name="rechercher" class="btn btn-info" role="button"/>
         </form>
     </div>
 </div>
