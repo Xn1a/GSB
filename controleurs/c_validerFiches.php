@@ -62,21 +62,34 @@ switch ($action) {
     // Mise à jour des frais hors forfaits
     case 'corrigerFraisHorsForfait':
         $fraisHorsForfait = filter_input(INPUT_POST, 'fraisHorsForfait', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+        $btnRefuser = filter_input(INPUT_POST, 'refuser', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+
+        if (isset($btnRefuser)) {
+            // TODO: Change libelle frais and add au début "REFUSE :"  
+            $fraisHorsForfait['libelle'] = "REFUSE : ".$fraisHorsForfait['libelle']; 
+            ajouterInfo('Le frais forfait a bien été refusé.');    
+        } 
+        
         // Edition du frais hors forfait
         $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
 
-        ajouterInfo('Le frais forfait a bien été corrigé.');
+        if (!isset($btnRefuser)) {
+            ajouterInfo('Le frais forfait a bien été corrigé.');
+        }
+
+        // Affichage de la vue
         include 'vues/v_infos.php';
         afficherFrais($pdo, $idVisiteur, $fiche);
         break;
+
     case 'validerFiche':
-    // Changement de l'état de la fiche
-    $pdo->majEtatFicheFrais($idVisiteur, $fiche, 'VA');
+        // Changement de l'état de la fiche
+        $pdo->majEtatFicheFrais($idVisiteur, $fiche, 'VA');
         break;
 }
 
 /**
- * Affiche le contenu de la fiche : les frais forfaits, les frais hors forfait, 
+ * Affiche le contenu de la fiche : les frais forfaits, les frais hors forfait,
  * le nombre de justificatifs et la liste des fiches de l'utilisateurs.
  *
  * @param [type] $pdo
@@ -84,7 +97,8 @@ switch ($action) {
  * @param String $fiche
  * @return void
  */
-function afficherFrais($pdo, $idVisiteur, $fiche) {
+function afficherFrais($pdo, $idVisiteur, $fiche)
+{
     // Récupérations des données nécessaires
     $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
     $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $fiche);

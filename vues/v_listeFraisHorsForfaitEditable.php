@@ -1,13 +1,14 @@
 <?php
 /**
- * Vue Liste des frais hors forfait
+ * Vue Liste des frais hors forfait editables 
+ * pour permettre au comptables de corriger les frais
  *
  * PHP Version 7
  *
  * @category  PPE
  * @package   GSB
  * @author    Réseau CERTA <contact@reseaucerta.org>
- * @author    José GIL <jgil@ac-nice.fr>
+ * @author    Pauline Gaonac'h <xn1a@protonmail.com>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
@@ -29,12 +30,17 @@
             </thead>
             <tbody>
             <?php
-foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
-    $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-    $date = $unFraisHorsForfait['date'];
-    $montant = $unFraisHorsForfait['montant'];
-    $id = $unFraisHorsForfait['id'];?>
-                <tr>
+            foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+                $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+                $date = $unFraisHorsForfait['date'];
+                $montant = $unFraisHorsForfait['montant'];
+                $id = $unFraisHorsForfait['id'];
+                ?>
+                <tr 
+                <?php if (stripos($libelle, 'REFUSE :') !== false) {
+                    echo "style='background-color:red;'";
+                } ?>
+                >
                     <form method="post"
                     action="index.php?uc=validerFiches&action=corrigerFraisHorsForfait"
                     role="form">
@@ -44,15 +50,16 @@ foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
                         <td>
                             <button class="btn btn-success" type="submit">Corriger</button>
                             <button class="btn btn-danger" type="reset">Réinitialiser</button>
+                            <button class="btn btn-danger" type="submit" name="refuser">Refuser</button>
                         </td>
                         <input type="hidden" name="fraisHorsForfait[id]" value="<?php echo $id; ?>">
                         <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur; ?>">
                         <input type="hidden" name="lstMois" value="<?php echo $fiche; ?>">
                     </form>
                 </tr>
-                <?php
-}
-?>
+            <?php
+            }
+            ?>
             </tbody>
         </table>
     </div>
