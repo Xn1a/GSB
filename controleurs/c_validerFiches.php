@@ -54,6 +54,8 @@ switch ($action) {
             include 'vues/v_erreurs.php';
         }
 
+        ajouterInfo('Les frais hors forfait on bien été corrigés.');
+        include 'vues/v_infos.php';
         afficherFrais($pdo, $idVisiteur, $fiche);
         break;
 
@@ -62,6 +64,9 @@ switch ($action) {
         $fraisHorsForfait = filter_input(INPUT_POST, 'fraisHorsForfait', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
         // Edition du frais hors forfait
         $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
+
+        ajouterInfo('Le frais forfait a bien été corrigé.');
+        include 'vues/v_infos.php';
         afficherFrais($pdo, $idVisiteur, $fiche);
         break;
     case 'validerFiche':

@@ -236,6 +236,21 @@ function ajouterErreur($msg)
 }
 
 /**
+ * Ajoute le libellé d'un message d'information au tableau des méssages d'information
+ *
+ * @param String $msg Libellé du message d'information
+ *
+ * @return null
+ */
+function ajouterInfo($msg)
+{
+    if (!isset($_REQUEST['infos'])) {
+        $_REQUEST['infos'] = array();
+    }
+    $_REQUEST['infos'][] = $msg;
+}
+
+/**
  * Retoune le nombre de lignes du tableau des erreurs
  *
  * @return Integer le nombre d'erreurs
