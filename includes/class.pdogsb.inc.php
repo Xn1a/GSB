@@ -439,9 +439,7 @@ class PdoGsb
             . 'AND lignefraishorsforfait.id = :idFrais'
         );
 
-        // Convertie la date au format année-mois-jour
-        $composantsDate = explode('/', $fraisHorsForfait['date']);
-        $date = $composantsDate[2]."-".$composantsDate[1]."-".$composantsDate[0];
+        $date = dateFrancaisVersAnglais($fraisHorsForfait['date']);
 
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
