@@ -1,6 +1,6 @@
 <?php
 /**
- * Gestion de l'affichage des frais
+ * Visiteur : Affichage de la fiche de frais sélectionnée
  *
  * PHP Version 7
  *
@@ -30,7 +30,7 @@ case 'voirEtatFrais':
     $leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
     $lesMois = $pdo->getLesMoisDisponibles($idUtilisateur);
     $moisASelectionner = $leMois;
-    include 'vues/v_listeMois.php';
+    include 'vues/v_listeMoisVisiteurs.php';
     $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idUtilisateur, $leMois);
     $lesFraisForfait = $pdo->getLesFraisForfait($idUtilisateur, $leMois);
     $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idUtilisateur, $leMois);
