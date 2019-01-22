@@ -32,7 +32,6 @@ if (isset($fiche)) {
 $recherche = trim(filter_input(INPUT_POST, 'recherche', FILTER_SANITIZE_STRING));
 $btnRechercher = filter_input(INPUT_POST, 'rechercher', FILTER_SANITIZE_STRING);
 if (isset($btnRechercher) && !empty($recherche)) {
-    // TODO: Separer la recherche à l'espace et pour chaque terme, rechercher
     $termesRecherche = explode(' ', $recherche);
     foreach ($termesRecherche as $terme) {
         $i = 0;
