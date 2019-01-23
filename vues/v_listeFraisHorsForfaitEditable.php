@@ -72,5 +72,4 @@
           <input type="hidden" name="lstMois" value="<?php echo $fiche; ?>">
           <button class="btn btn-success" type="submit">Valider</button>
     </form>
-    <button class="btn btn-danger" type="reset">Réinitialiser</button>
 </div>
