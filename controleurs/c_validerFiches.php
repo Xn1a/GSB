@@ -51,7 +51,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
         // Selection de la fiche
         case 'selectionnerMois':
             // Affiche la liste des mois
-            $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+            $lesMois = $pdo->getLesMoisNonCLDisponibles($idVisiteur);
             include 'vues/v_listeMoisComptables.php';
             break;
 
