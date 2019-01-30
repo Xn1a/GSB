@@ -50,14 +50,16 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
     switch ($action) {
         // Selection de la fiche
         case 'selectionnerMois':
-            // Affiche la liste des mois
+            // Affiche la liste des fiches non cloturée
             $lesMois = $pdo->getLesMoisNonCLDisponibles($idVisiteur);
             include 'vues/v_listeMoisComptables.php';
             break;
 
         // Affichage des frais forfait et hors forfait corrigeable
         case 'afficherFiche':
-            afficherFrais($pdo, $idVisiteur, $fiche);
+            if ($fiche != 'Pas de fiche de frais pour ce visiteur ce mois') {
+                afficherFrais($pdo, $idVisiteur, $fiche);
+            }
             break;
 
         // Mise à jour des frais forfaits
