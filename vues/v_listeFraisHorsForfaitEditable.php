@@ -45,7 +45,7 @@
                     action="index.php?uc=validerFiches&action=corrigerFraisHorsForfait"
                     role="form">
                         <td><input class="form-control" type="text" name="fraisHorsForfait[date]" value="<?php echo $date ?>"></td>
-                        <td><input class="form-control" type="text" name="fraisHorsForfait[libelle]" value="<?php echo $libelle ?>"></td>
+                        <td><input class="form-control" type="text" name="fraisHorsForfait[libelle]" value="<?php echo substr($libelle, 0, 26) ?>"></td>
                         <td><input class="form-control" type="text" name="fraisHorsForfait[montant]" value="<?php echo $montant ?>"></td>
                         <td>
                             <button class="btn btn-success" type="submit">Corriger</button>
