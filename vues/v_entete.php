@@ -49,16 +49,16 @@
                                     Accueil
                                 </a>
                             </li>
-                            <li <?php if ($uc == 'gererFrais') { ?>class="active"<?php } ?>>
-                                <a href="index.php?uc=gererFrais&action=saisirFrais">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                    Renseigner la fiche de frais
+                            <li <?php if ($uc == 'gererFrais' || $uc == 'validerFiches') { ?>class="active"<?php } ?>>
+                                <a href="<?php echo $page1['lien'] ?>">
+                                    <span class="glyphicon <?php echo $page1['icon'] ?>"></span>
+                                    <?php echo $page1['titre'] ?>
                                 </a>
                             </li>
-                            <li <?php if ($uc == 'etatFrais') { ?>class="active"<?php } ?>>
-                                <a href="index.php?uc=etatFrais&action=selectionnerMois">
-                                    <span class="glyphicon glyphicon-list-alt"></span>
-                                    Afficher mes fiches de frais
+                            <li <?php if ($uc == 'etatFrais' || $uc == 'suivreFiches') { ?>class="active"<?php } ?>>
+                                <a href="<?php echo $page2['lien'] ?>">
+                                    <span class="glyphicon <?php echo $page2['icon'] ?>"></span>
+                                    <?php echo $page2['titre'] ?>
                                 </a>
                             </li>
                             <li 
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-            <?php
+                <?php
             } else {
                 ?>   
                 <h1>

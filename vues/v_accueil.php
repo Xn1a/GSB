@@ -16,7 +16,7 @@
 ?>
 <div id="accueil">
     <h2>
-        Gestion des frais<small> - Visiteur : 
+        Gestion des frais<small> - <?php echo $_SESSION['fonction']?> : 
             <?php 
             echo $_SESSION['prenom'] . ' ' . $_SESSION['nom']
             ?></small>
@@ -34,14 +34,14 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-xs-12 col-md-12">
-                        <a href="index.php?uc=gererFrais&action=saisirFrais"
+                        <a href="<?php echo $page1['lien'] ?>"
                            class="btn btn-success btn-lg" role="button">
-                            <span class="glyphicon glyphicon-pencil"></span>
-                            <br>Renseigner la fiche de frais</a>
-                        <a href="index.php?uc=etatFrais&action=selectionnerMois"
+                            <span class="glyphicon <?php echo $page1['icon'] ?>"></span>
+                            <br><?php echo $page1['titre'] ?></a>
+                        <a href="<?php echo $page2['lien'] ?>"
                            class="btn btn-primary btn-lg" role="button">
-                            <span class="glyphicon glyphicon-list-alt"></span>
-                            <br>Afficher mes fiches de frais</a>
+                            <span class="glyphicon <?php echo $page2['icon'] ?>"></span>
+                            <br><?php echo $page2['titre'] ?></a>
                     </div>
                 </div>
             </div>
