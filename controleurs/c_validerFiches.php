@@ -74,7 +74,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
                 include 'vues/v_erreurs.php';
             }
 
-            ajouterInfo('Les frais hors forfait on bien été corrigés.');
+            ajouterInfo('Les frais forfait on bien été corrigés.');
             include 'vues/v_infos.php';
             afficherFrais($pdo, $idVisiteur, $fiche);
             break;
@@ -87,7 +87,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
 
             if (isset($btnReporter)) {
                 $pdo->reporterFraisHorsForfait($idVisiteur, $fraisHorsForfait);
-                ajouterInfo('Le frais forfait a bien été reporté au mois prochain.');
+                ajouterInfo('Le frais hors forfait a bien été reporté au mois prochain.');
             }
 
             if (isset($btnRefuser)) {
