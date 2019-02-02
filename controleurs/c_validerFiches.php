@@ -101,7 +101,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
             }
 
             if (!isset($btnRefuser) && !isset($btnReporter)) {
-                ajouterInfo('Le frais forfait a bien été corrigé.');
+                ajouterInfo('Le frais hors forfait a bien été corrigé.');
             }
 
             // Affichage de la vue
