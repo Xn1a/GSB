@@ -74,7 +74,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
                 include 'vues/v_erreurs.php';
             }
 
-            ajouterInfo('Les frais forfait on bien été corrigés.');
+            ajouterInfo('Les frais ont bien été corrigés.');
             include 'vues/v_infos.php';
             afficherFrais($pdo, $idVisiteur, $fiche);
             break;
@@ -85,23 +85,18 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
             $btnRefuser = filter_input(INPUT_POST, 'refuser', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
             $btnReporter = filter_input(INPUT_POST, 'reporter', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
 
+            // Report du frais 
             if (isset($btnReporter)) {
                 $pdo->reporterFraisHorsForfait($idVisiteur, $fraisHorsForfait);
-                ajouterInfo('Le frais hors forfait a bien été reporté au mois prochain.');
-            }
-
-            if (isset($btnRefuser)) {
+                ajouterInfo('Le frais a bien été reporté au mois prochain.');
+            } // Refus du frais
+            else if (isset($btnRefuser)) { 
                 $pdo->refuserFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
-                ajouterInfo('Le frais forfait a bien été refusé.');
-            }
-
-            // Edition du frais hors forfait
-            if (!isset($btnRefuser) && !isset($btnReporter)) {
+                ajouterInfo('Le frais a bien été refusé.');
+            } 
+            else { // Correction du frais
                 $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
-            }
-
-            if (!isset($btnRefuser) && !isset($btnReporter)) {
-                ajouterInfo('Le frais hors forfait a bien été corrigé.');
+                ajouterInfo('Le frais a bien été corrigé.');
             }
 
             // Affichage de la vue

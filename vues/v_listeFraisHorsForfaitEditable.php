@@ -48,6 +48,7 @@
                         <td><input class="form-control" type="text" name="fraisHorsForfait[date]" value="<?php echo $date ?>"></td>
                         <td><input class="form-control" type="text" name="fraisHorsForfait[libelle]" value="<?php echo substr($libelle, 0, 26) ?>"></td>
                         <td><input class="form-control" type="text" name="fraisHorsForfait[montant]" value="<?php echo $montant ?>"></td>
+                        <td><input class="form-control" type="hidden" name="fraisHorsForfait[estRefuse]" value="<?php echo $estRefuse ?>"></td>
                         <td>
                             <button class="btn btn-success" type="submit">Corriger</button>
                             <button class="btn btn-info" type="submit" name="reporter">Reporter</button>
