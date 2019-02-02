@@ -500,12 +500,12 @@ class PdoGsb
      * @return un tableau associatif de clé un mois -aaaamm- et de valeurs
      *         l'année et le mois correspondant
      */
-    public function getLesMoisNonCLDisponibles($idVisiteur)
+    public function getLesMoisCLCRDisponibles($idVisiteur)
     {
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'SELECT fichefrais.mois AS mois FROM fichefrais '
             . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
-            . "AND fichefrais.idetat = 'CR' "
+            . "AND fichefrais.idetat IN('CL', 'CR') "
             . 'ORDER BY fichefrais.mois desc'
         );
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
