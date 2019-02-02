@@ -49,6 +49,7 @@
                         <td><input class="form-control" type="text" name="fraisHorsForfait[montant]" value="<?php echo $montant ?>"></td>
                         <td>
                             <button class="btn btn-success" type="submit">Corriger</button>
+                            <button class="btn btn-info" type="submit" name="reporter">Reporter</button>
                             <button class="btn btn-danger" type="reset">Réinitialiser</button>
                             <button class="btn btn-danger" type="submit" name="refuser">Refuser</button>
                         </td>

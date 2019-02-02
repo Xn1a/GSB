@@ -373,6 +373,7 @@ class PdoGsb
     /**
      * Crée un nouveau frais hors forfait pour un visiteur un mois donné
      * à partir des informations fournies en paramètre
+     * Crée la fiche de frais si elle n'existe pas déja
      *
      * @param String $idVisiteur ID du visiteur
      * @param String $mois       Mois sous la forme aaaamm
@@ -389,6 +390,17 @@ class PdoGsb
         $date,
         $montant
     ) {
+        // Crée la fiche si elle n'existe pas déja
+        $requetePrepare = PdoGsb::$monPdo->prepare(
+            'INSERT INTO fichefrais (idvisiteur,mois,nbjustificatifs,'
+            . 'montantvalide,datemodif,idetat) '
+            . "VALUES (:unIdVisiteur,:unMois,0,0,now(),'CR')"
+        );
+        $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
+        $requetePrepare->bindParam(':unMois', $mois, PDO::PARAM_STR);
+        $requetePrepare->execute();
+
+        // Crée le frais hors forfait
         $dateFr = dateFrancaisVersAnglais($date);
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'INSERT INTO lignefraishorsforfait '
@@ -435,8 +447,7 @@ class PdoGsb
             . 'lignefraishorsforfait.libelle = :libelle '
             . 'WHERE lignefraishorsforfait.id = :idFrais '
             . 'AND lignefraishorsforfait.idvisiteur = :unIdVisiteur '
-            . 'AND lignefraishorsforfait.mois = :unMois '
-            . 'AND lignefraishorsforfait.id = :idFrais'
+            . 'AND lignefraishorsforfait.mois = :unMois'
         );
 
         $date = dateFrancaisVersAnglais($fraisHorsForfait['date']);
@@ -451,14 +462,31 @@ class PdoGsb
     }
 
     /**
+     * Reporte un frais hors forfait au mois prochain
+     *
+     *
+     * @return null
+     */
+    public function reporterFraisHorsForfait($idVisiteur, $fraisHorsForfait)
+    {
+        @list($jour, $mois, $annee) = explode('/', $fraisHorsForfait['date']);
+        $date = mktime(0, 0, 0, $mois, 1, $annee);
+        $moisProchain = strftime('%Y%m', strtotime('+1 month', $date));
+
+        $this->creeNouveauFraisHorsForfait($idVisiteur, $moisProchain, $fraisHorsForfait['libelle'], $fraisHorsForfait['date'], $fraisHorsForfait['montant']);
+        $this->supprimerFraisHorsForfait($fraisHorsForfait['id']);
+    }
+
+    /**
      * Retourne les mois pour lesquel un visiteur a une fiche de frais qui n'est pas cloturée
-     * 
+     *
      * @param String $idVisiteur ID du visiteur
-     * 
+     *
      * @return un tableau associatif de clé un mois -aaaamm- et de valeurs
      *         l'année et le mois correspondant
      */
-    public function getLesMoisNonCLDisponibles($idVisiteur) {
+    public function getLesMoisNonCLDisponibles($idVisiteur)
+    {
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'SELECT fichefrais.mois AS mois FROM fichefrais '
             . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '

@@ -83,17 +83,24 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
         case 'corrigerFraisHorsForfait':
             $fraisHorsForfait = filter_input(INPUT_POST, 'fraisHorsForfait', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
             $btnRefuser = filter_input(INPUT_POST, 'refuser', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+            $btnReporter = filter_input(INPUT_POST, 'reporter', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+
+            if (isset($btnReporter)) {
+                $pdo->reporterFraisHorsForfait($idVisiteur, $fraisHorsForfait);
+                ajouterInfo('Le frais forfait a bien été reporté au mois prochain.');
+            }
 
             if (isset($btnRefuser)) {
-                // TODO: Change libelle frais and add au début "REFUSE :"
                 $fraisHorsForfait['libelle'] = "REFUSE : " . $fraisHorsForfait['libelle'];
                 ajouterInfo('Le frais forfait a bien été refusé.');
             }
 
             // Edition du frais hors forfait
-            $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
+            if (!isset($btnReporter)) {
+                $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
+            }
 
-            if (!isset($btnRefuser)) {
+            if (!isset($btnRefuser) && !isset($btnReporter)) {
                 ajouterInfo('Le frais forfait a bien été corrigé.');
             }
 
