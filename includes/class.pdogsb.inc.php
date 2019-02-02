@@ -444,7 +444,8 @@ class PdoGsb
             'UPDATE lignefraishorsforfait '
             . 'SET lignefraishorsforfait.date = :date, '
             . 'lignefraishorsforfait.montant = :montant, '
-            . 'lignefraishorsforfait.libelle = :libelle '
+            . 'lignefraishorsforfait.libelle = :libelle, '
+            . 'lignefraishorsforfait.estRefuse = :estRefuse '
             . 'WHERE lignefraishorsforfait.id = :idFrais '
             . 'AND lignefraishorsforfait.idvisiteur = :unIdVisiteur '
             . 'AND lignefraishorsforfait.mois = :unMois'
@@ -458,7 +459,21 @@ class PdoGsb
         $requetePrepare->bindParam(':montant', $fraisHorsForfait['montant'], PDO::PARAM_STR);
         $requetePrepare->bindParam(':libelle', $fraisHorsForfait['libelle'], PDO::PARAM_STR);
         $requetePrepare->bindParam(':idFrais', $fraisHorsForfait['id'], PDO::PARAM_STR);
+        $requetePrepare->bindParam(':estRefuse', $fraisHorsForfait['estRefuse'], PDO::PARAM_STR);
         $requetePrepare->execute();
+    }
+
+    /**
+     * RRefuser un frais hors forfait
+     *
+     *
+     * @return null
+     */
+    public function refuserFraisHorsForfait($idVisiteur, $mois, $fraisHorsForfait)
+    {
+        $fraisHorsForfait['libelle'] = "REFUSE : " . $fraisHorsForfait['libelle'];
+        $fraisHorsForfait['estRefuse'] = '1';
+        $this->majFraisHorsForfait($idVisiteur, $mois, $fraisHorsForfait);
     }
 
     /**

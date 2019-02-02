@@ -35,6 +35,7 @@
                 $date = $unFraisHorsForfait['date'];
                 $montant = $unFraisHorsForfait['montant'];
                 $id = $unFraisHorsForfait['id'];
+                $estRefuse = $unFraisHorsForfait['estRefuse'];
                 ?>
                 <tr 
                 <?php if (stripos($libelle, 'REFUSE :') !== false) {
@@ -51,7 +52,11 @@
                             <button class="btn btn-success" type="submit">Corriger</button>
                             <button class="btn btn-info" type="submit" name="reporter">Reporter</button>
                             <button class="btn btn-danger" type="reset">Réinitialiser</button>
-                            <button class="btn btn-danger" type="submit" name="refuser">Refuser</button>
+                            <button class="btn btn-danger" type="submit" name="refuser"
+                            <?php if ($estRefuse) {
+                                echo "disabled";
+                            } ?>
+                            >Refuser</button>
                         </td>
                         <input type="hidden" name="fraisHorsForfait[id]" value="<?php echo $id; ?>">
                         <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur; ?>">

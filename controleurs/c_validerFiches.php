@@ -91,12 +91,12 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
             }
 
             if (isset($btnRefuser)) {
-                $fraisHorsForfait['libelle'] = "REFUSE : " . $fraisHorsForfait['libelle'];
+                $pdo->refuserFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
                 ajouterInfo('Le frais forfait a bien été refusé.');
             }
 
             // Edition du frais hors forfait
-            if (!isset($btnReporter)) {
+            if (!isset($btnRefuser) && !isset($btnReporter)) {
                 $pdo->majFraisHorsForfait($idVisiteur, $fiche, $fraisHorsForfait);
             }
 
