@@ -15,11 +15,10 @@
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
 ?>
-
         <div class="form-group">
             <label for="lstMois" accesskey="n">Mois : </label>
             <select id="lstMois" name="lstMois" class="form-control">
-                <?php
+                <?php 
                 if(count($lesMois) == 0) { ?>
                     <option selected>Pas de fiche de frais pour ce visiteur ce mois</option>
                 <?php }

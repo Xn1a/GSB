@@ -127,6 +127,8 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
  */
 function afficherFrais($pdo, $idVisiteur, $fiche)
 {
+    $moisASelectionner = $fiche;
+
     // Récupérations des données nécessaires
     $lesMois = $pdo->getLesMoisNonCLDisponibles($idVisiteur);
     $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $fiche);
@@ -142,6 +144,5 @@ function afficherFrais($pdo, $idVisiteur, $fiche)
     // Affichage des vues
     include 'vues/v_listeMoisComptables.php';
     include 'vues/v_listeFraisForfait.php';
-    echo "<hr/>";
     include 'vues/v_listeFraisHorsForfaitEditable.php';
 }
