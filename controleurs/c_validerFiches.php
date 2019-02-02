@@ -128,7 +128,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
 function afficherFrais($pdo, $idVisiteur, $fiche)
 {
     // Récupérations des données nécessaires
-    $lesMois = $pdo->getLesMoisDisponibles($idVisiteur);
+    $lesMois = $pdo->getLesMoisNonCLDisponibles($idVisiteur);
     $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $fiche);
     $nombreJustificatifs = $pdo->getNbjustificatifs($idVisiteur, $fiche);
     $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $fiche);
