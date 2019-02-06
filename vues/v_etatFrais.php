@@ -75,14 +75,19 @@
         ?>
     </table>
 </div>
-
 <?php if ($_SESSION['fonction'] == 'Comptable' && $etat == 'VA') { ?>
     <form method="post" 
             action="index.php?uc=suivreFiches&action=mettreEnPaiement" 
             role="form">
         <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
         <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
-        <button class="btn btn-info" type="submit">Mettre en paiement</button>
+        <button class="btn btn-info" type="submit"
+        <?php
+        if (getdate()['mday'] < 20) { 
+            echo 'disabled';
+        }
+        ?>
+        >Mettre en paiement</button>
     </form>
 <?php } ?>
 
