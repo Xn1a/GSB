@@ -49,6 +49,6 @@
                             }
                         }   ?>    
                     </select>
-                    <button class="btn btn-success" type="submit">Consulter</button>
+                    <button class="btn btn-info" type="submit">Consulter</button>
                 </form>
             </div>

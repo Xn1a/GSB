@@ -82,6 +82,16 @@
             role="form">
         <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
         <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
-        <button class="btn btn-success" type="submit">Mettre en paiement</button>
+        <button class="btn btn-info" type="submit">Mettre en paiement</button>
+    </form>
+<?php } ?>
+
+<?php if ($_SESSION['fonction'] == 'Comptable' && $etat == 'MP') { ?>
+    <form method="post" 
+            action="index.php?uc=suivreFiches&action=mettreARemboursee" 
+            role="form">
+        <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
+        <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
+        <button class="btn btn-success" type="submit">Remboursée</button>
     </form>
 <?php } ?>

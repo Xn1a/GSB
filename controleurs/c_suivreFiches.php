@@ -45,6 +45,21 @@ switch ($action) {
 
         afficherFiche($pdo, $idVisiteurSel, $moisSel);
         break;
+
+    case 'mettreARemboursee':
+        $moisSel = filter_input(INPUT_POST, 'mois', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
+        $idVisiteurSel = filter_input(INPUT_POST, 'idVisiteur', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
+        // On met la fiche a l'état remboursé
+        $pdo->majEtatFicheFrais($idVisiteurSel, $moisSel, 'RB');
+
+        afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
+
+        // Affiche le message de confirmation
+        ajouterInfo("La fiche a bien été mise à l'état remboursée");
+        include 'vues/v_infos.php';
+
+        afficherFiche($pdo, $idVisiteurSel, $moisSel);
+        break;
 }
 
 function afficherListeFiches($pdo, $idVisiteurSel = null, $moisSel = null)
