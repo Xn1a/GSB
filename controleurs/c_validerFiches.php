@@ -51,7 +51,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
         // Selection de la fiche
         case 'selectionnerMois':
             // Affiche la liste des fiches non cloturée
-            $lesMois = $pdo->getLesMoisCLCRDisponibles($idVisiteur);
+            $lesMois = $pdo->getLesMoisDisponiblesAEtats($idVisiteur, ['CL', 'CR']);
             include 'vues/v_listeMoisComptables.php';
             break;
 
@@ -125,7 +125,7 @@ function afficherFrais($pdo, $idVisiteur, $fiche)
     $moisASelectionner = $fiche;
 
     // Récupérations des données nécessaires
-    $lesMois = $pdo->getLesMoisCLCRDisponibles($idVisiteur);
+    $lesMois = $pdo->getLesMoisDisponiblesAEtats($idVisiteur, ['CL', 'CR']);
     $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $fiche);
     $nombreJustificatifs = $pdo->getNbjustificatifs($idVisiteur, $fiche);
     $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $fiche);
