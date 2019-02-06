@@ -31,16 +31,12 @@
                             <option selected value="<?php echo $mois ?>">
                                 <?php echo $numMois . '/' . $numAnnee ?> </option>
                             <?php
-
-                        } else {
-                            ?>
+                        } 
+                        else { ?>
                             <option value="<?php echo $mois ?>">
-                                <?php echo $numMois . '/' . $numAnnee ?> </option>
-                            <?php
-
-                        }
-                    }
-                    ?>    
-
+                                <?php echo $numMois . '/' . $numAnnee ?> 
+                            </option>
+                        <?php }
+                    } ?>    
                 </select>
             </div>
