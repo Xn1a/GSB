@@ -89,7 +89,7 @@ class PdoGsb
      * @param String $login Login du utilisateur
      * @param String $mdp   Mot de passe du utilisateur
      *
-     * @return l'id, le nom et le prénom sous la forme d'un tableau associatif
+     * @return l'id, la fonction, le nom et le prénom sous la forme d'un tableau associatif
      */
     public function getInfosUtilisateur($login, $mdp)
     {
@@ -102,6 +102,27 @@ class PdoGsb
         );
         $requetePrepare->bindParam(':unLogin', $login, PDO::PARAM_STR);
         $requetePrepare->bindParam(':unMdp', $mdp, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        return $requetePrepare->fetch();
+    }
+
+    /**
+     * Retourne les informations d'un utilisateur
+     *
+     * @param String $id de l'utilisateur
+     *
+     * @return la fonction, le nom et le prénom sous la forme d'un tableau associatif
+     */
+    public function getInfosUtilisateurParId($id)
+    {
+        $requetePrepare = PdoGsb::$monPdo->prepare(
+            'SELECT utilisateur.nom AS nom, '
+            . 'utilisateur.prenom AS prenom, '
+            . 'utilisateur.fonction AS fonction '
+            . 'FROM utilisateur '
+            . 'WHERE utilisateur.id = :unId'
+        );
+        $requetePrepare->bindParam(':unId', $id, PDO::PARAM_STR);
         $requetePrepare->execute();
         return $requetePrepare->fetch();
     }
@@ -493,24 +514,74 @@ class PdoGsb
     }
 
     /**
-     * Retourne les mois pour lesquel un visiteur a une fiche de frais qui n'est pas cloturée
+     * Retourne les fiches validées
+     *
+     *
+     * @return les fiches : mois, année et nom et prénom du visiteur propriétaire de la fiche
+     */
+    public function getLesFichesValidees()
+    {
+        $requetePrepare = PdoGSB::$monPdo->prepare(
+            'SELECT fichefrais.mois AS mois, utilisateur.nom as nom,  
+            utilisateur.prenom as prenom, fichefrais.idvisiteur AS idVisiteur FROM fichefrais '
+            . 'JOIN utilisateur ON fichefrais.idvisiteur = utilisateur.id '
+            . "WHERE fichefrais.idetat IN ('VA', 'MP') "
+            . 'ORDER BY fichefrais.mois desc'
+        );
+
+        $requetePrepare->execute();
+
+        $lesFiches = array();
+        while ($laLigne = $requetePrepare->fetch()) {
+            $mois = $laLigne['mois'];
+            $numAnnee = substr($mois, 0, 4);
+            $numMois = substr($mois, 4, 2);
+            $lesFiches[] = array(
+                'mois' => $mois,
+                'numAnnee' => $numAnnee,
+                'numMois' => $numMois,
+                'prenom' => $laLigne['prenom'],
+                'nom' => $laLigne['nom'],
+                'idVisiteur' => $laLigne['idVisiteur']
+            );
+        }
+        return $lesFiches;
+    }
+
+    /**
+     * Retourne les mois pour lesquels un visiteur a une fiche de frais qui est dans les états demandés
      *
      * @param String $idVisiteur ID du visiteur
+     * @param String $etats : les états des fiches à récupérer sous la forme
+     * d'une chaine de carartères, ex: "'CL', 'CR'"
      *
      * @return un tableau associatif de clé un mois -aaaamm- et de valeurs
      *         l'année et le mois correspondant
      */
-    public function getLesMoisCLCRDisponibles($idVisiteur)
+    public function getLesMoisDisponiblesAEtats($idVisiteur, $etats)
     {
+        // Permet de bind les etats dans le IN()
+        for ($i = 0; $i < count($etats); $i++) {
+            $in .= ':' . $etats[$i];
+            if ($i != count($etats) - 1) {
+                $in .= ',';
+            }
+        }
+
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'SELECT fichefrais.mois AS mois FROM fichefrais '
             . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
-            . "AND fichefrais.idetat IN('CL', 'CR') "
-            . 'ORDER BY fichefrais.mois desc'
+            . "AND fichefrais.idetat IN ($in) "// 'CL', 'CR'
+             . 'ORDER BY fichefrais.mois desc'
         );
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
-        //$requetePrepare->bindParam(':idEtat', 'CR', PDO::PARAM_STR);
+
+        foreach ($etats as $etat) {
+            $requetePrepare->bindParam(':' . $etat, $etat, PDO::PARAM_STR);
+        }
+
         $requetePrepare->execute();
+
         $lesMois = array();
         while ($laLigne = $requetePrepare->fetch()) {
             $mois = $laLigne['mois'];
