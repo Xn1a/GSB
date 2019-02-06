@@ -23,11 +23,16 @@ switch ($action) {
 
     case 'consulterFiche':
         $fiche = filter_input(INPUT_POST, 'lstFiches', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
-        $fiche = explode('-', $fiche);
-        $moisSel = $fiche[1];
-        $idVisiteurSel = $fiche[0];
-        afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
-        afficherFiche($pdo, $idVisiteurSel, $moisSel);
+        if ($fiche != 'Pas de fiches validées disponibles actuellement') {
+            $fiche = explode('-', $fiche);
+            $moisSel = $fiche[1];
+            $idVisiteurSel = $fiche[0];
+            afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
+            afficherFiche($pdo, $idVisiteurSel, $moisSel);
+        }
+        else {
+            afficherListeFiches($pdo);
+        }
         break;
 
     case 'mettreEnPaiement':
