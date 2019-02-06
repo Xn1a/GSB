@@ -40,5 +40,9 @@ case 'voirEtatFrais':
     $montantValide = $lesInfosFicheFrais['montantValide'];
     $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
+
+    $infosUtilisateur = $pdo->getInfosUtilisateurParId($idVisiteurSel);
+    $nomPrenom = $infosUtilisateur['prenom']. ' ' . $infosUtilisateur['nom'];
+    
     include 'vues/v_etatFrais.php';
 }
