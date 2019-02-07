@@ -17,7 +17,7 @@
 <hr>
 <div class="panel panel-primary">
     <div class="panel-heading">Fiche de frais du mois 
-        <?php echo $numMois . '-' . $numAnnee ?> : </div>
+        <?php echo $numMois . '-' . $numAnnee ?> du visiteur <?php echo $nomPrenom ?> : </div>
     <div class="panel-body">
         <strong><u>Etat :</u></strong> <?php echo $libEtat ?>
         depuis le <?php echo $dateModif ?> <br> 
@@ -60,8 +60,12 @@
         foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
             $date = $unFraisHorsForfait['date'];
             $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
-            $montant = $unFraisHorsForfait['montant']; ?>
-            <tr>
+            $montant = $unFraisHorsForfait['montant'];
+            $estRefuse = $unFraisHorsForfait['estRefuse']; ?>
+            <tr  <?php if ($estRefuse) {
+                    echo "style='background-color:red;'";
+                } ?> 
+            >
                 <td><?php echo $date ?></td>
                 <td><?php echo $libelle ?></td>
                 <td><?php echo $montant ?></td>
@@ -71,3 +75,28 @@
         ?>
     </table>
 </div>
+<?php if ($_SESSION['fonction'] == 'Comptable' && $etat == 'VA') { ?>
+    <form method="post" 
+            action="index.php?uc=suivreFiches&action=mettreEnPaiement" 
+            role="form">
+        <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
+        <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
+        <button class="btn btn-info" type="submit"
+        <?php
+        if (getdate()['mday'] < 20) { 
+            echo 'disabled';
+        }
+        ?>
+        >Mettre en paiement</button>
+    </form>
+<?php } ?>
+
+<?php if ($_SESSION['fonction'] == 'Comptable' && $etat == 'MP') { ?>
+    <form method="post" 
+            action="index.php?uc=suivreFiches&action=mettreARemboursee" 
+            role="form">
+        <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
+        <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
+        <button class="btn btn-success" type="submit">Remboursée</button>
+    </form>
+<?php } ?>

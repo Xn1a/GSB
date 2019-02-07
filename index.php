@@ -44,7 +44,7 @@ if ($_SESSION['fonction'] == "Comptable") {
     );
     $page2 = array(
         "titre" => "Suivre le paiement des fiches de frais",
-        "lien" => "index.php?uc=suivreFiches&action=",
+        "lien" => "index.php?uc=suivreFiches&action=selectionnerFiche",
         "icon" => "glyphicon-euro",
     );
 }
