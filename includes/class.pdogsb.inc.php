@@ -549,20 +549,19 @@ class PdoGsb
     }
 
     /**
-     * Retourne les mois pour lesquels un visiteur a une fiche de frais qui est dans les états demandés
+     * Retourne les mois pour lesquels un visiteur a une fiche de frais qui est dans l'un des états demandé
      *
-     * @param String $idVisiteur ID du visiteur
-     * @param String $etats : les états des fiches à récupérer sous la forme
-     * d'une chaine de carartères, ex: "'CL', 'CR'"
+     * @param String $idVisiteur : ID du visiteur
+     * @param String $etats : les états des fiches à récupérer sous la forme d'un tableau , ex: ['CL', 'VA']
      *
      * @return un tableau associatif de clé un mois -aaaamm- et de valeurs
      *         l'année et le mois correspondant
      */
     public function getLesMoisDisponiblesAEtats($idVisiteur, $etats)
     {
-        // Permet de bind les etats dans le IN()
+        // Formatage des états demandés
         for ($i = 0; $i < count($etats); $i++) {
-            $in .= ':' . $etats[$i];
+            $in .= "'$etats[$i]'";
             if ($i != count($etats) - 1) {
                 $in .= ',';
             }
@@ -571,15 +570,10 @@ class PdoGsb
         $requetePrepare = PdoGSB::$monPdo->prepare(
             'SELECT fichefrais.mois AS mois FROM fichefrais '
             . 'WHERE fichefrais.idvisiteur = :unIdVisiteur '
-            . "AND fichefrais.idetat IN ($in) "// 'CL', 'CR'
+            . "AND fichefrais.idetat IN ($in) "
              . 'ORDER BY fichefrais.mois desc'
         );
         $requetePrepare->bindParam(':unIdVisiteur', $idVisiteur, PDO::PARAM_STR);
-
-        foreach ($etats as $etat) {
-            $requetePrepare->bindParam(':' . $etat, $etat, PDO::PARAM_STR);
-        }
-
         $requetePrepare->execute();
 
         $lesMois = array();
