@@ -77,6 +77,12 @@
           role="form">
           <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur; ?>">
           <input type="hidden" name="lstMois" value="<?php echo $fiche; ?>">
-          <button class="btn btn-success" type="submit">Valider</button>
+          <?php if($idEtat == 'CR') { ?>
+            <button class="btn btn-warning" type="submit" disabled>Saisie en cours...</button>
+          <?php } 
+          else { ?>
+            <button class="btn btn-success" type="submit">Valider</button>
+          <?php } ?>
+          
     </form>
 </div>

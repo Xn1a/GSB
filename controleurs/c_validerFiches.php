@@ -138,7 +138,7 @@ function afficherFiche($pdo, $idVisiteur, $leMois)
 
     // Affichage des vues
     include 'vues/v_listeMoisComptables.php';
-    afficherInfosFiche($pdo, $idVisiteur, $leMois);
+    $idEtat = afficherInfosFiche($pdo, $idVisiteur, $leMois);
     include 'vues/v_listeFraisForfait.php';
     include 'vues/v_listeFraisHorsForfaitEditable.php';
 }
@@ -147,6 +147,7 @@ function afficherInfosFiche($pdo, $idVisiteur, $leMois) {
     $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
     $numAnnee = substr($leMois, 0, 4);
     $numMois = substr($leMois, 4, 2);
+    $idEtat = $lesInfosFicheFrais['idEtat'];
     $libEtat = $lesInfosFicheFrais['libEtat'];
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
 
@@ -154,4 +155,6 @@ function afficherInfosFiche($pdo, $idVisiteur, $leMois) {
     $nomPrenom = $infosUtilisateur['prenom']. ' ' . $infosUtilisateur['nom'];
 
     include 'vues/v_infosFiche.php';
+
+    return $idEtat;
 }
