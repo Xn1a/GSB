@@ -48,9 +48,9 @@ require 'vues/v_listeVisiteurs.php';
 
 if (!isset($btnRechercher) && empty($btnRechercher)) {
     switch ($action) {
-        // Selection de la fiche
+        // Action : selection de la fiche
         case 'selectionnerMois':
-            // Affiche la liste des fiches non cloturée
+            // Affiche la liste des fiches
             $lesMois = $pdo->getLesMoisDisponiblesAEtats($idVisiteur, ['CL', 'CR']);
             include 'vues/v_listeMoisComptables.php';
             break;
