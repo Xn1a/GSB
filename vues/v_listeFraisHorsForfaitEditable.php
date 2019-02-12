@@ -51,10 +51,14 @@
                         <td><input class="form-control" type="hidden" name="fraisHorsForfait[estRefuse]" value="<?php echo $estRefuse ?>"></td>
                         <td>
                             <button class="btn btn-success" type="submit">Corriger</button>
-                            <button class="btn btn-info" type="submit" name="reporter">Reporter</button>
+                            <button class="btn btn-info" type="submit" name="reporter"
+                            <?php if($idEtat == 'CR') {
+                                echo 'disabled';
+                            } ?>
+                            >Reporter</button>
                             <button class="btn btn-danger" type="reset">Réinitialiser</button>
                             <button class="btn btn-danger" type="submit" name="refuser"
-                            <?php if ($estRefuse) {
+                            <?php if ($estRefuse || $idEtat == 'CR') {
                                 echo "disabled";
                             } ?>
                             >Refuser</button>
@@ -77,6 +81,12 @@
           role="form">
           <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur; ?>">
           <input type="hidden" name="lstMois" value="<?php echo $fiche; ?>">
-          <button class="btn btn-success" type="submit">Valider</button>
+          <?php if($idEtat == 'CR') { ?>
+            <button class="btn btn-warning" type="submit" disabled>Saisie en cours...</button>
+          <?php } 
+          else { ?>
+            <button class="btn btn-success" type="submit">Valider</button>
+          <?php } ?>
+          
     </form>
 </div>

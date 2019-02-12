@@ -16,7 +16,7 @@
  */
 ?>
 
-<div class="col-md-4">
+<div>
     <form action="index.php?uc=validerFiches&action=afficherFiche"
         method="post" role="form">
         <?php require 'v_listeMois.php';?>

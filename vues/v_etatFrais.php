@@ -15,15 +15,7 @@
  */
 ?>
 <hr>
-<div class="panel panel-primary">
-    <div class="panel-heading">Fiche de frais du mois 
-        <?php echo $numMois . '-' . $numAnnee ?> du visiteur <?php echo $nomPrenom ?> : </div>
-    <div class="panel-body">
-        <strong><u>Etat :</u></strong> <?php echo $libEtat ?>
-        depuis le <?php echo $dateModif ?> <br> 
-        <strong><u>Montant validé :</u></strong> <?php echo $montantValide ?>
-    </div>
-</div>
+<?php require 'vues/v_infosFiche.php' ?>
 <div class="panel panel-info">
     <div class="panel-heading">Eléments forfaitisés</div>
     <table class="table table-bordered table-responsive">
