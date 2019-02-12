@@ -113,7 +113,8 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
 
 /**
  * Affiche le contenu de la fiche : les frais forfaits, les frais hors forfait,
- * le nombre de justificatifs et la liste des fiches de l'utilisateurs.
+ * le nombre de justificatifs, la liste des fiches de l'utilisateurs et les
+ * informations sur la fiche (etat, visiteur, mois)
  *
  * @param [type] $pdo
  * @param Int $idVisiteur
@@ -143,6 +144,14 @@ function afficherFiche($pdo, $idVisiteur, $leMois)
     include 'vues/v_listeFraisHorsForfaitEditable.php';
 }
 
+/**
+ * Affiche les informations concernant la fiche (etat, visiteur, mois)
+ *
+ * @param [type] $pdo
+ * @param Int $idVisiteur
+ * @param String $fiche
+ * @return $idEtat : l'état de la fiche
+ */
 function afficherInfosFiche($pdo, $idVisiteur, $leMois) {
     $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
     $numAnnee = substr($leMois, 0, 4);
@@ -155,6 +164,5 @@ function afficherInfosFiche($pdo, $idVisiteur, $leMois) {
     $nomPrenom = $infosUtilisateur['prenom']. ' ' . $infosUtilisateur['nom'];
 
     include 'vues/v_infosFiche.php';
-
     return $idEtat;
 }
