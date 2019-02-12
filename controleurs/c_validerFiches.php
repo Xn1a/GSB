@@ -58,7 +58,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
         // Affichage des frais forfait et hors forfait corrigeable
         case 'afficherFiche':
             if ($fiche != 'Pas de fiche de frais pour ce visiteur ce mois') {
-                afficherFrais($pdo, $idVisiteur, $fiche);
+                afficherFiche($pdo, $idVisiteur, $fiche);
             }
             break;
 
@@ -76,7 +76,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
 
             ajouterInfo('Les frais ont bien été corrigés.');
             include 'vues/v_infos.php';
-            afficherFrais($pdo, $idVisiteur, $fiche);
+            afficherFiche($pdo, $idVisiteur, $fiche);
             break;
 
         // Mise à jour des frais hors forfaits
@@ -101,7 +101,7 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
 
             // Affichage de la vue
             include 'vues/v_infos.php';
-            afficherFrais($pdo, $idVisiteur, $fiche);
+            afficherFiche($pdo, $idVisiteur, $fiche);
             break;
 
         case 'validerFiche':
@@ -120,15 +120,15 @@ if (!isset($btnRechercher) && empty($btnRechercher)) {
  * @param String $fiche
  * @return void
  */
-function afficherFrais($pdo, $idVisiteur, $fiche)
+function afficherFiche($pdo, $idVisiteur, $leMois)
 {
-    $moisASelectionner = $fiche;
+    $moisASelectionner = $leMois;
 
     // Récupérations des données nécessaires
     $lesMois = $pdo->getLesMoisDisponiblesAEtats($idVisiteur, ['CL', 'CR']);
-    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $fiche);
-    $nombreJustificatifs = $pdo->getNbjustificatifs($idVisiteur, $fiche);
-    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $fiche);
+    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $leMois);
+    $nombreJustificatifs = $pdo->getNbjustificatifs($idVisiteur, $leMois);
+    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $leMois);
 
     // Texte adapté aux utilisateurs comptables
     $texteSubmit = "Corriger";
@@ -138,6 +138,20 @@ function afficherFrais($pdo, $idVisiteur, $fiche)
 
     // Affichage des vues
     include 'vues/v_listeMoisComptables.php';
+    afficherInfosFiche($pdo, $idVisiteur, $leMois);
     include 'vues/v_listeFraisForfait.php';
     include 'vues/v_listeFraisHorsForfaitEditable.php';
+}
+
+function afficherInfosFiche($pdo, $idVisiteur, $leMois) {
+    $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteur, $leMois);
+    $numAnnee = substr($leMois, 0, 4);
+    $numMois = substr($leMois, 4, 2);
+    $libEtat = $lesInfosFicheFrais['libEtat'];
+    $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
+
+    $infosUtilisateur = $pdo->getInfosUtilisateurParId($idVisiteur);
+    $nomPrenom = $infosUtilisateur['prenom']. ' ' . $infosUtilisateur['nom'];
+
+    include 'vues/v_infosFiche.php';
 }
