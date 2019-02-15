@@ -7,7 +7,7 @@
  * @category  PPE
  * @package   GSB
  * @author    Réseau CERTA <contact@reseaucerta.org>
- * @author    Pauline Gaonac'h <xn1a@protonmail.com>
+ * @author    Pauline Gaonac'h <pauline.gaod@gmail.com
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
@@ -89,12 +89,13 @@ if (isset($leMois)) {
 $recherche = trim(filter_input(INPUT_POST, 'recherche', FILTER_SANITIZE_STRING));
 $btnRechercher = filter_input(INPUT_POST, 'rechercher', FILTER_SANITIZE_STRING);
 
-if (isset($btnRechercher) && !empty($recherche)) {
+if ((isset($btnRechercher)) && (!empty($recherche))) {
     $termesRecherche = explode(' ', $recherche);
     foreach ($termesRecherche as $terme) {
         $i = 0;
         foreach ($lesVisiteurs as $unVisiteur) {
-            if (stripos($unVisiteur['nom'], $terme) === false && stripos($unVisiteur['prenom'], $terme) === false) {
+            if ((stripos($unVisiteur['nom'], $terme) === false) 
+                && (stripos($unVisiteur['prenom'], $terme) === false)) {
                 unset($lesVisiteurs[$i]);
             }
             $i++;
@@ -104,7 +105,7 @@ if (isset($btnRechercher) && !empty($recherche)) {
 
 require 'vues/v_listeVisiteurs.php';
 
-if (!isset($btnRechercher) && empty($btnRechercher)) {
+if ((!isset($btnRechercher)) && (empty($btnRechercher))) {
     switch ($action) {
 
     case 'selectionnerMois':
