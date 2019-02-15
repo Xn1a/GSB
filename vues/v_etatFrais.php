@@ -88,14 +88,18 @@ if (($_SESSION['fonction'] == 'Comptable') && ($etat == 'VA')) { ?>
         >Mettre en paiement
     </button>
 </form>
-<?php } ?>
+<?php 
+} 
+?>
 
 <?php 
-if ($_SESSION['fonction'] == 'Comptable' && $etat == 'MP') { ?>
+if (($_SESSION['fonction'] == 'Comptable') && ($etat == 'MP')) { ?>
 <form method="post" action="index.php?uc=suivreFiches&action=mettreARemboursee"
     role="form">
     <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
     <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
     <button class="btn btn-success" type="submit">Remboursée</button>
 </form>
-<?php } ?>
+<?php 
+} 
+?>
