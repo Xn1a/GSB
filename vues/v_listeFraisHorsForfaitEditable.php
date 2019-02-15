@@ -29,8 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-            <?php
-            foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
+            <?php foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
                 $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
                 $date = $unFraisHorsForfait['date'];
                 $montant = $unFraisHorsForfait['montant'];
@@ -45,10 +44,10 @@
                     <form method="post"
                     action="index.php?uc=validerFiches&action=corrigerFraisHorsForfait"
                     role="form">
-                        <td><input class="form-control" type="text" name="fraisHorsForfait[date]" value="<?php echo $date ?>"></td>
+                        <td><input class="form-control" type="text" name="fraisHorsForfait[date]" value="<?php echo $date; ?>"></td>
                         <td><input class="form-control" type="text" name="fraisHorsForfait[libelle]" value="<?php echo substr($libelle, 0, 26) ?>"></td>
-                        <td><input class="form-control" type="text" name="fraisHorsForfait[montant]" value="<?php echo $montant ?>"></td>
-                        <td><input class="form-control" type="hidden" name="fraisHorsForfait[estRefuse]" value="<?php echo $estRefuse ?>"></td>
+                        <td><input class="form-control" type="text" name="fraisHorsForfait[montant]" value="<?php echo $montant; ?>"></td>
+                        <td><input class="form-control" type="hidden" name="fraisHorsForfait[estRefuse]" value="<?php echo $estRefuse; ?>"></td>
                         <td>
                             <button class="btn btn-success" type="submit">Corriger</button>
                             <button class="btn btn-info" type="submit" name="reporter"
@@ -65,7 +64,7 @@
                         </td>
                         <input type="hidden" name="fraisHorsForfait[id]" value="<?php echo $id; ?>">
                         <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur; ?>">
-                        <input type="hidden" name="lstMois" value="<?php echo $fiche; ?>">
+                        <input type="hidden" name="lstMois" value="<?php echo $leMoi;s ?>">
                     </form>
                 </tr>
             <?php
@@ -80,7 +79,7 @@
           action="index.php?uc=validerFiches&action=validerFiche"
           role="form">
           <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur; ?>">
-          <input type="hidden" name="lstMois" value="<?php echo $fiche; ?>">
+          <input type="hidden" name="lstMois" value="<?php echo $leMois; ?>">
           <?php if($idEtat == 'CR') { ?>
             <button class="btn btn-warning" type="submit" disabled>Saisie en cours...</button>
           <?php } 

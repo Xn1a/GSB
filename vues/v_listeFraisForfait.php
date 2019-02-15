@@ -39,7 +39,7 @@
                     </div>
                     <?php
                 } ?>
-                <input type="hidden" name="lstMois" value="<?php echo $fiche ?>">
+                <input type="hidden" name="lstMois" value="<?php echo $leMois ?>">
                 <input type="hidden" name="lstVisiteurs" value="<?php echo $idVisiteur ?>">
                 <button class="btn btn-success" type="submit"><?php echo $texteSubmit ?></button>
                 <button class="btn btn-danger" type="reset"><?php echo $texteReset ?></button>
