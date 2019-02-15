@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Vue Liste des visiteurs
  *
@@ -15,35 +14,40 @@
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
 ?>
+
 <div class="row">
     <div class="col-md-4">
-        <form action="index.php?uc=validerFiches&action=selectionnerMois" 
-              method="post" role="form">
+        <form action="index.php?uc=validerFiches&action=selectionnerMois"
+            method="post" role="form">
             <div class="form-group">
-                <label for="lstVisiteurs" accesskey="n">Choisir un visiteur ou rechercher un nom : </label>
-                <input type="search" name="recherche" value="<?php echo $recherche; ?>" placeholder="Rechercher un nom..." class="form-control"
-                />
-                <br/> 
+                <label for="lstVisiteurs" accesskey="n">Choisir un visiteur ou
+                    rechercher un nom : </label>
+                <input type="search" name="recherche"
+                    value="<?php echo $recherche; ?>"
+                    placeholder="Rechercher un nom..." class="form-control" />
+                <br />
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
                     <?php
                     foreach ($lesVisiteurs as $unVisiteur) { 
-                        if ($unVisiteur['id'] == $idVisiteurASelectionner) {
-                            ?>
-                        <option selected value="<?php echo $unVisiteur['id'] ?>">
-                            <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
-                        </option>
-                        <?php } else { ?>
-                        <option value="<?php echo $unVisiteur['id'] ?>">
-                            <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
-                        </option>
-                        <?php } ?>
-                        
-                    <?php } ?>    
+                        if ($unVisiteur['id'] == $idVisiteurASelectionner) { ?>
+                            <option selected value="<?php echo $unVisiteur['id'] ?>">
+                                <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
+                            </option>
+                    <?php 
+                        } else { ?>
+                            <option value="<?php echo $unVisiteur['id'] ?>">
+                                <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
+                            </option>
+                    <?php 
+                        } 
+                    } 
+                    ?>
                 </select>
             </div>
             <input id="ok" type="submit" value="Choisir" class="btn btn-success"
-            role="button">
-            <input type="submit" value="Rechercher" name="rechercher" class="btn btn-info" role="button"/>
+                role="button">
+            <input type="submit" value="Rechercher" name="rechercher"
+                class="btn btn-info" role="button" />
         </form>
     </div>
 </div>

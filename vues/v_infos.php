@@ -6,7 +6,7 @@
  *
  * @category  PPE
  * @package   GSB
- * @author    Pauline Gaonac'h <xn1a@protonmail.com>
+ * @author    Pauline Gaonac'h <pauline.gaod@gmail.com>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
