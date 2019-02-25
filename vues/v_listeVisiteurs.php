@@ -1,6 +1,6 @@
 <?php
 /**
- * Vue Liste des visiteurs
+ * Vue : Liste des visiteurs
  *
  * PHP Version 7
  *
@@ -23,20 +23,24 @@
                 <label for="lstVisiteurs" accesskey="n">Choisir un visiteur ou
                     rechercher un nom : </label>
                 <input type="search" name="recherche"
-                    value="<?php echo $recherche; ?>"
+                    value="<?php echo htmlspecialchars($recherche); ?>"
                     placeholder="Rechercher un nom..." class="form-control" />
                 <br />
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
                     <?php
                     foreach ($lesVisiteurs as $unVisiteur) { 
+                        $nom = htmlspecialchars($unVisiteur['nom']);
+                        $prenom = htmlspecialchars($unVisiteur['prenom']);
+                        
                         if ($unVisiteur['id'] == $idVisiteurASelectionner) { ?>
                             <option selected value="<?php echo $unVisiteur['id'] ?>">
-                                <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
+                                <?php echo $nom . ' ' . $prenom ?>
                             </option>
                     <?php 
-                        } else { ?>
+                        } else { 
+                    ?>
                             <option value="<?php echo $unVisiteur['id'] ?>">
-                                <?php echo $unVisiteur['nom'] . ' ' . $unVisiteur['prenom'] ?>
+                                <?php echo $nom . ' ' . $prenom ?>
                             </option>
                     <?php 
                         } 

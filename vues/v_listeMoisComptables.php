@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Vue Liste des mois pour les comptables
+ * Vue : Liste des mois pour les comptables
  *
  * PHP Version 7
  *
