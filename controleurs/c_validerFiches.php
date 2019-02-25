@@ -26,6 +26,11 @@
  */
 function afficherFiche($pdo, $idVisiteur, $leMois)
 {
+    $lesVisiteurs = initialiserListeVisiteurs($pdo);
+    $idVisiteurASelectionner = $lesVisiteurs['idVisiteur'];
+    $lesVisiteurs = $lesVisiteurs['lesVisiteurs'];
+
+    $leMois = getMoisSelectionne();
     $moisASelectionner = $leMois;
 
     // Récupérations des données nécessaires
@@ -41,6 +46,7 @@ function afficherFiche($pdo, $idVisiteur, $leMois)
     $actionFormulaire = "index.php?uc=validerFiches&action=corrigerFraisForfait";
 
     // Affichage des vues
+    include 'vues/v_listeVisiteurs.php';
     include 'vues/v_listeMoisComptables.php';
     $idEtat = afficherInfosFiche($pdo, $idVisiteur, $leMois);
     include 'vues/v_listeFraisForfait.php';
@@ -71,107 +77,152 @@ function afficherInfosFiche($pdo, $idVisiteur, $leMois)
     return $idEtat;
 }
 
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
-
-// Action par defaut "selectionnerVisiteur" : récupération de la liste
-// des visiteurs et du visiteur selectionné si il y en a
-$idVisiteur = filter_input(INPUT_POST, 'lstVisiteurs', FILTER_SANITIZE_STRING);
-$idVisiteurASelectionner = $idVisiteur;
-$lesVisiteurs = $pdo->getLesVisiteurs();
-
-// Récupération du mois selectionné si il y en a
-$leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
-if (isset($leMois)) {
-    $moisASelectionner = $leMois;
+/**
+ * Récupère le mois selectionné dans la liste 
+ *
+ * @param [type] $pdo : l'objet représentant la base de données
+ * @return $leMois : le mois selectionné
+ */
+function getMoisSelectionne()
+{
+    $leMois = filter_input(INPUT_POST, 'lstMois', FILTER_SANITIZE_STRING);
+    if (isset($leMois)) {
+        $moisASelectionner = $leMois;
+    }
+    return $leMois;
 }
 
-// Affichage des visiteurs en fonction de la recherche si utilisée
-$recherche = trim(filter_input(INPUT_POST, 'recherche', FILTER_SANITIZE_STRING));
-$btnRechercher = filter_input(INPUT_POST, 'rechercher', FILTER_SANITIZE_STRING);
+/**
+ * Initialise la liste des visiteurs (liste des visiteurs, 
+ * visiteur sélectionné antérieurement, recherche)
+ *
+ * @param $pdo : l'objet représentant la base de données
+ * @return $lesVisiteurs : un tableau contenant la liste des visiteurs mais 
+ * aussi l'id du visiteur sélectionné
+ */
+function initialiserListeVisiteurs($pdo)
+{
+    // Récupération de la liste des visiteurs et du visiteur selectionné (si il y en a)
+    $idVisiteur = filter_input(INPUT_POST, 'lstVisiteurs', FILTER_SANITIZE_STRING);
+    $lesVisiteurs = $pdo->getLesVisiteurs();
 
-if ((isset($btnRechercher)) && (!empty($recherche))) {
-    $termesRecherche = explode(' ', $recherche);
-    foreach ($termesRecherche as $terme) {
-        $i = 0;
-        foreach ($lesVisiteurs as $unVisiteur) {
-            if ((stripos($unVisiteur['nom'], $terme) === false)
-                && (stripos($unVisiteur['prenom'], $terme) === false)) {
-                unset($lesVisiteurs[$i]);
+    // Affichage des visiteurs en fonction de la recherche (si utilisée)
+    $recherche = trim(filter_input(INPUT_POST, 'recherche', FILTER_SANITIZE_STRING));
+    $btnRechercher = filter_input(INPUT_POST, 'rechercher', FILTER_SANITIZE_STRING);
+
+    if ((isset($btnRechercher)) && (!empty($recherche))) {
+        $termesRecherche = explode(' ', $recherche);
+        foreach ($termesRecherche as $terme) {
+            $i = 0;
+            foreach ($lesVisiteurs as $unVisiteur) {
+                if ((stripos($unVisiteur['nom'], $terme) === false)
+                    && (stripos($unVisiteur['prenom'], $terme) === false)) {
+                    unset($lesVisiteurs[$i]);
+                }
+                $i++;
             }
-            $i++;
         }
     }
+    $lesVisiteurs = ['lesVisiteurs' => $lesVisiteurs, 'idVisiteur' => $idVisiteur];
+    return $lesVisiteurs;
 }
 
-require 'vues/v_listeVisiteurs.php';
+$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
-if ((!isset($btnRechercher)) && (empty($btnRechercher))) {
-    switch ($action) {
+switch ($action) {
+    case 'selectionnerVisiteur':
+        // Affiche la liste des visiteurs
+        $lesVisiteurs = initialiserListeVisiteurs($pdo)['lesVisiteurs'];
+        include 'vues/v_listeVisiteurs.php';
+        break;
 
-        case 'selectionnerMois':
-            // Affiche la liste des fiches
-            $lesMois = $pdo->getLesMoisDisponiblesAEtats($idVisiteur, ['CL', 'CR']);
-            include 'vues/v_listeMoisComptables.php';
-            break;
+    case 'selectionnerMois':
+        // Affiche la liste des visiteurs avec le visiteur selectionné
+        $lesVisiteurs = initialiserListeVisiteurs($pdo);
+        $idVisiteur = $lesVisiteurs['idVisiteur'];
+        $lesVisiteurs = $lesVisiteurs['lesVisiteurs'];
+        $idVisiteurASelectionner = $idVisiteur;
+        include 'vues/v_listeVisiteurs.php';
 
-        case 'afficherFiche':
-            if ($leMois != 'Pas de fiche de frais pour ce visiteur ce mois') {
-                afficherFiche($pdo, $idVisiteur, $leMois);
-            }
-            break;
+        // Affiche la liste des mois
+        $lesMois = $pdo->getLesMoisDisponiblesAEtats($idVisiteur, ['CL', 'CR']);
+        include 'vues/v_listeMoisComptables.php';
+        break;
 
-        case 'corrigerFraisForfait':
-            $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
-
-            // Edition des frais forfaits
-            if (lesQteFraisValides($lesFrais)) {
-                $pdo->majFraisForfait($idVisiteur, $leMois, $lesFrais);
-            } else {
-                ajouterErreur('Les valeurs des frais doivent être numériques');
-                include 'vues/v_erreurs.php';
-            }
-
-            ajouterInfo('Les frais ont bien été corrigés.');
-            include 'vues/v_infos.php';
+    case 'afficherFiche':
+        $leMois = getMoisSelectionne();
+        $idVisiteur = initialiserListeVisiteurs($pdo)['idVisiteur'];
+        if ($leMois != 'Pas de fiche de frais pour ce visiteur ce mois') {
             afficherFiche($pdo, $idVisiteur, $leMois);
-            break;
+        }
+        break;
 
-        case 'corrigerFraisHorsForfait':
-            $fraisHorsForfait = filter_input(INPUT_POST, 'fraisHorsForfait', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
-            $btnRefuser = filter_input(INPUT_POST, 'refuser', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
-            $btnReporter = filter_input(INPUT_POST, 'reporter', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+    case 'corrigerFraisForfait':
+        $lesFrais = filter_input(INPUT_POST, 'lesFrais', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+        $leMois = getMoisSelectionne();
+        $idVisiteur = initialiserListeVisiteurs($pdo)['idVisiteur'];
 
-            // Report du frais
-            if (isset($btnReporter)) {
-                $pdo->reporterFraisHorsForfait($idVisiteur, $fraisHorsForfait);
-                ajouterInfo('Le frais a bien été reporté au mois prochain.');
-            } else if (isset($btnRefuser)) { // Refus du frais
-                $pdo->refuserFraisHorsForfait($idVisiteur, $leMois, $fraisHorsForfait);
-                ajouterInfo('Le frais a bien été refusé.');
-            } else { // Correction du frais
-                $pdo->majFraisHorsForfait($idVisiteur, $leMois, $fraisHorsForfait);
-                ajouterInfo('Le frais a bien été corrigé.');
-            }
+        // Edition des frais forfaits
+        if (lesQteFraisValides($lesFrais)) {
+            $pdo->majFraisForfait($idVisiteur, $leMois, $lesFrais);
+        } else {
+            ajouterErreur('Les valeurs des frais doivent être numériques');
+            include 'vues/v_erreurs.php';
+        }
 
-            // Affichage de la vue
-            include 'vues/v_infos.php';
-            afficherFiche($pdo, $idVisiteur, $leMois);
-            break;
+        ajouterInfo('Les frais ont bien été corrigés.');
+        include 'vues/v_infos.php';
+        afficherFiche($pdo, $idVisiteur, $leMois);
+        break;
 
-        case 'validerFiche':
-            // Addition des frais validés
-            $lesMontantsFraisHorsForfaitValides
-            = $pdo->getLesMontantsFraisHorsForfaitValides($idVisiteur, $leMois);
-            $lesMontantFraisForfait
-            = $pdo->getLesMontantsFraisForfait($idVisiteur, $leMois);
+    case 'corrigerFraisHorsForfait':
+        $fraisHorsForfait = filter_input(INPUT_POST, 'fraisHorsForfait', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+        $btnRefuser = filter_input(INPUT_POST, 'refuser', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
+        $btnReporter = filter_input(INPUT_POST, 'reporter', FILTER_DEFAULT, FILTER_FORCE_ARRAY);
 
-            // Ajout du montant total validé dans la base de données
-            $montantTotalValide = array_sum($lesMontantsFraisHorsForfaitValides)
-             + array_sum($lesMontantFraisForfait);
-            $pdo->majMontantValideFicheFrais($idVisiteur, $leMois, $montantTotalValide);
+        $leMois = getMoisSelectionne();
+        $idVisiteur = initialiserListeVisiteurs($pdo)['idVisiteur'];
 
-            // Changement de l'état de la fiche
-            $pdo->majEtatFicheFrais($idVisiteur, $leMois, 'VA');
-            break;
-    }
+        // Report du frais
+        if (isset($btnReporter)) {
+            $pdo->reporterFraisHorsForfait($idVisiteur, $fraisHorsForfait);
+            ajouterInfo('Le frais a bien été reporté au mois prochain.');
+        } else if (isset($btnRefuser)) { // Refus du frais
+            $pdo->refuserFraisHorsForfait($idVisiteur, $leMois, $fraisHorsForfait);
+            ajouterInfo('Le frais a bien été refusé.');
+        } else { // Correction du frais
+            $pdo->majFraisHorsForfait($idVisiteur, $leMois, $fraisHorsForfait);
+            ajouterInfo('Le frais a bien été corrigé.');
+        }
+
+        // Affichage de la vue
+        include 'vues/v_infos.php';
+        afficherFiche($pdo, $idVisiteur, $leMois);
+        break;
+
+    case 'validerFiche':
+        $leMois = getMoisSelectionne();
+        $idVisiteur = initialiserListeVisiteurs($pdo)['idVisiteur'];
+
+        // Addition des frais validés
+        $lesMontantsFraisHorsForfaitValides
+        = $pdo->getLesMontantsFraisHorsForfaitValides($idVisiteur, $leMois);
+        $lesMontantFraisForfait
+        = $pdo->getLesMontantsFraisForfait($idVisiteur, $leMois);
+
+        // Ajout du montant total validé dans la base de données
+        $montantTotalValide = array_sum($lesMontantsFraisHorsForfaitValides)
+         + array_sum($lesMontantFraisForfait);
+        $pdo->majMontantValideFicheFrais($idVisiteur, $leMois, $montantTotalValide);
+
+        // Changement de l'état de la fiche
+        $pdo->majEtatFicheFrais($idVisiteur, $leMois, 'VA');
+        ajouterInfo('La fiche a bien été validée');
+        include 'vues/v_infos.php';
+
+    default:
+        // Affiche la liste des visiteurs
+        $lesVisiteurs = initialiserListeVisiteurs($pdo)['lesVisiteurs'];
+        include 'vues/v_listeVisiteurs.php';
+        break;
 }
