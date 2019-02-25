@@ -15,38 +15,41 @@
  */
 ?>
 <div class="form-group">
+    <h2>Suivre le paiement des fiches de frais validées</h2>
     <form action="index.php?uc=suivreFiches&action=consulterFiche" method="post"
         role="form">
-        <label for="lstFiches" accesskey="n">Fiches validées : </label>
-        <select id="lstFiches" name="lstFiches" class="form-control">
-            <?php 
-            if(count($lesFiches) == 0) { ?>
-                <option selected>Pas de fiches validées disponibles actuellement</option>
-            <?php 
-            }
-            foreach ($lesFiches as $uneFiche) {
-                $mois = $uneFiche['mois'];
-                $numAnnee = $uneFiche['numAnnee'];
-                $numMois = $uneFiche['numMois'];
-                $idVisiteur = $uneFiche['idVisiteur'];
-                $prenom = htmlspecialchars($uneFiche['prenom'], ENT_QUOTES);
-                $nom = htmlspecialchars($uneFiche['nom'], ENT_QUOTES);
+        <div class="form-group">
+            <label for="lstFiches" accesskey="n">Fiches validées : </label>
+            <select id="lstFiches" name="lstFiches" class="form-control">
+                <?php 
+                if(count($lesFiches) == 0) { ?>
+                    <option selected>Pas de fiches validées disponibles actuellement</option>
+                <?php 
+                }
+                foreach ($lesFiches as $uneFiche) {
+                    $mois = $uneFiche['mois'];
+                    $numAnnee = $uneFiche['numAnnee'];
+                    $numMois = $uneFiche['numMois'];
+                    $idVisiteur = $uneFiche['idVisiteur'];
+                    $prenom = htmlspecialchars($uneFiche['prenom'], ENT_QUOTES);
+                    $nom = htmlspecialchars($uneFiche['nom'], ENT_QUOTES);
 
-                if (($idVisiteur == $idVisiteurSel) && ($mois == $moisSel)) { ?>
-                    <option selected value="<?php echo $idVisiteur.'-'.$mois  ?>">
+                    if (($idVisiteur == $idVisiteurSel) && ($mois == $moisSel)) { ?>
+                        <option selected value="<?php echo $idVisiteur.'-'.$mois  ?>">
+                            <?php echo $numMois . '/' . $numAnnee . ' ' . $prenom . ' ' . $nom ?>
+                        </option>
+                <?php
+                    } else {
+                ?>
+                    <option value="<?php echo $idVisiteur.'-'.$mois ?>">
                         <?php echo $numMois . '/' . $numAnnee . ' ' . $prenom . ' ' . $nom ?>
                     </option>
-            <?php
-                } else {
-            ?>
-                <option value="<?php echo $idVisiteur.'-'.$mois ?>">
-                    <?php echo $numMois . '/' . $numAnnee . ' ' . $prenom . ' ' . $nom ?>
-                </option>
-            <?php
-                }
-            }   
-            ?>
-        </select>
+                <?php
+                    }
+                }   
+                ?>
+            </select>
+        </div>
         <button class="btn btn-info" type="submit">Consulter</button>
     </form>
 </div>
