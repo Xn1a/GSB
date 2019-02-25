@@ -109,4 +109,8 @@ switch ($action) {
 
         afficherFiche($pdo, $idVisiteurSel, $moisSel);
         break;
+
+    default:
+        afficherListeFiches($pdo);
+        break;
 }
