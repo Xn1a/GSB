@@ -32,7 +32,7 @@
                 $prenom = $uneFiche['prenom'];
                 $nom = $uneFiche['nom'];
 
-                if (($idVisiteur == $idVisiteurSel) && (($mois == $moisSel)) { ?>
+                if (($idVisiteur == $idVisiteurSel) && ($mois == $moisSel)) { ?>
                     <option selected value="<?php echo $idVisiteur.'-'.$mois  ?>">
                         <?php echo $numMois . '/' . $numAnnee . ' ' . $prenom . ' ' . $nom ?>
                     </option>
