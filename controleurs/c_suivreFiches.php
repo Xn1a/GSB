@@ -62,51 +62,51 @@ function afficherListeFiches($pdo, $idVisiteurSel = null, $moisSel = null)
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
 switch ($action) {
-case 'selectionnerFiche':
-    afficherListeFiches($pdo);
-    break;
-
-case 'consulterFiche':
-    $fiche = filter_input(INPUT_POST, 'lstFiches', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
-    if ($fiche != 'Pas de fiches validées disponibles actuellement') {
-        $fiche = explode('-', $fiche);
-        $moisSel = $fiche[1];
-        $idVisiteurSel = $fiche[0];
-        afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
-        afficherFiche($pdo, $idVisiteurSel, $moisSel);
-    } else {
+    case 'selectionnerFiche':
         afficherListeFiches($pdo);
-    }
-    break;
+        break;
 
-case 'mettreEnPaiement':
-    $moisSel = filter_input(INPUT_POST, 'mois', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
-    $idVisiteurSel = filter_input(INPUT_POST, 'idVisiteur', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
+    case 'consulterFiche':
+        $fiche = filter_input(INPUT_POST, 'lstFiches', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
+        if ($fiche != 'Pas de fiches validées disponibles actuellement') {
+            $fiche = explode('-', $fiche);
+            $moisSel = $fiche[1];
+            $idVisiteurSel = $fiche[0];
+            afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
+            afficherFiche($pdo, $idVisiteurSel, $moisSel);
+        } else {
+            afficherListeFiches($pdo);
+        }
+        break;
 
-    // On met la fiche en paiement
-    $pdo->majEtatFicheFrais($idVisiteurSel, $moisSel, 'MP');
+    case 'mettreEnPaiement':
+        $moisSel = filter_input(INPUT_POST, 'mois', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
+        $idVisiteurSel = filter_input(INPUT_POST, 'idVisiteur', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
 
-    afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
+        // On met la fiche en paiement
+        $pdo->majEtatFicheFrais($idVisiteurSel, $moisSel, 'MP');
 
-    // Affiche le message de confirmation
-    ajouterInfo('La fiche a bien été mise en paiement');
-    include 'vues/v_infos.php';
+        afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
 
-    afficherFiche($pdo, $idVisiteurSel, $moisSel);
-    break;
+        // Affiche le message de confirmation
+        ajouterInfo('La fiche a bien été mise en paiement');
+        include 'vues/v_infos.php';
 
-case 'mettreARemboursee':
-    $moisSel = filter_input(INPUT_POST, 'mois', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
-    $idVisiteurSel = filter_input(INPUT_POST, 'idVisiteur', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
-    // On met la fiche a l'état remboursé
-    $pdo->majEtatFicheFrais($idVisiteurSel, $moisSel, 'RB');
+        afficherFiche($pdo, $idVisiteurSel, $moisSel);
+        break;
 
-    afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
+    case 'mettreARemboursee':
+        $moisSel = filter_input(INPUT_POST, 'mois', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
+        $idVisiteurSel = filter_input(INPUT_POST, 'idVisiteur', FILTER_DEFAULT, FILTER_SANITIZE_STRING);
+        // On met la fiche a l'état remboursé
+        $pdo->majEtatFicheFrais($idVisiteurSel, $moisSel, 'RB');
 
-    // Affiche le message de confirmation
-    ajouterInfo("La fiche a bien été mise à l'état remboursée");
-    include 'vues/v_infos.php';
+        afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
 
-    afficherFiche($pdo, $idVisiteurSel, $moisSel);
-    break;
+        // Affiche le message de confirmation
+        ajouterInfo("La fiche a bien été mise à l'état remboursée");
+        include 'vues/v_infos.php';
+
+        afficherFiche($pdo, $idVisiteurSel, $moisSel);
+        break;
 }
