@@ -78,7 +78,7 @@ function afficherInfosFiche($pdo, $idVisiteur, $leMois)
 }
 
 /**
- * Récupère le mois selectionné dans la liste 
+ * Récupère le mois selectionné dans la liste
  *
  * @param [type] $pdo : l'objet représentant la base de données
  * @return $leMois : le mois selectionné
@@ -93,11 +93,11 @@ function getMoisSelectionne()
 }
 
 /**
- * Initialise la liste des visiteurs (liste des visiteurs, 
+ * Initialise la liste des visiteurs (liste des visiteurs,
  * visiteur sélectionné antérieurement, recherche)
  *
  * @param $pdo : l'objet représentant la base de données
- * @return $lesVisiteurs : un tableau contenant la liste des visiteurs mais 
+ * @return $lesVisiteurs : un tableau contenant la liste des visiteurs mais
  * aussi l'id du visiteur sélectionné
  */
 function initialiserListeVisiteurs($pdo)
@@ -123,7 +123,10 @@ function initialiserListeVisiteurs($pdo)
             }
         }
     }
-    $lesVisiteurs = ['lesVisiteurs' => $lesVisiteurs, 'idVisiteur' => $idVisiteur];
+    $lesVisiteurs = [
+        'lesVisiteurs' => $lesVisiteurs,
+        'idVisiteur' => $idVisiteur,
+        'recherche' => $recherche];
     return $lesVisiteurs;
 }
 
@@ -132,15 +135,17 @@ $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 switch ($action) {
     case 'selectionnerVisiteur':
         // Affiche la liste des visiteurs
-        $lesVisiteurs = initialiserListeVisiteurs($pdo)['lesVisiteurs'];
+        $composantsListeVisisteur = initialiserListeVisiteurs($pdo);
+        $lesVisiteurs = $composantsListeVisisteur['lesVisiteurs'];
+        $recherche = $composantsListeVisisteur['recherche'];
         include 'vues/v_listeVisiteurs.php';
         break;
 
     case 'selectionnerMois':
         // Affiche la liste des visiteurs avec le visiteur selectionné
-        $lesVisiteurs = initialiserListeVisiteurs($pdo);
-        $idVisiteur = $lesVisiteurs['idVisiteur'];
-        $lesVisiteurs = $lesVisiteurs['lesVisiteurs'];
+        $composantsListeVisisteur = initialiserListeVisiteurs($pdo);
+        $idVisiteur = $composantsListeVisisteur['idVisiteur'];
+        $lesVisiteurs = $composantsListeVisisteur['lesVisiteurs'];
         $idVisiteurASelectionner = $idVisiteur;
         include 'vues/v_listeVisiteurs.php';
 

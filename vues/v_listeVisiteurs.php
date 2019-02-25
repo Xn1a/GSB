@@ -17,15 +17,23 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form action="index.php?uc=validerFiches&action=selectionnerMois"
+        <form action="index.php?uc=validerFiches&action=selectionnerVisiteur"
             method="post" role="form">
             <div class="form-group">
-                <label for="lstVisiteurs" accesskey="n">Choisir un visiteur ou
-                    rechercher un nom : </label>
+                <label for="lstVisiteurs" accesskey="n">Chercher un nom :</label>
                 <input type="search" name="recherche"
                     value="<?php echo htmlspecialchars($recherche); ?>"
                     placeholder="Rechercher un nom..." class="form-control" />
-                <br />
+            </div>
+            <input type="submit" value="Rechercher" name="rechercher" 
+                            class="btn btn-info" role="button" />
+        </form>
+    </div>
+    <div class="col-md-5">
+        <form action="index.php?uc=validerFiches&action=selectionnerMois"
+            method="post" role="form">
+            <div class="form-group">
+                <label for="lstVisiteurs" accesskey="n">Choisir un visiteur : </label>
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
                     <?php
                     foreach ($lesVisiteurs as $unVisiteur) { 
@@ -50,8 +58,6 @@
             </div>
             <input id="ok" type="submit" value="Choisir" class="btn btn-success"
                 role="button">
-            <input type="submit" value="Rechercher" name="rechercher"
-                class="btn btn-info" role="button" />
         </form>
     </div>
 </div>
