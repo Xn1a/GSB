@@ -30,7 +30,7 @@
             <tbody>
                 <?php
                 foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
-                    $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+                    $libelle = htmlspecialchars($unFraisHorsForfait['libelle'], ENT_QUOTES);
                     $date = $unFraisHorsForfait['date'];
                     $montant = $unFraisHorsForfait['montant'];
                     $id = $unFraisHorsForfait['id']; 

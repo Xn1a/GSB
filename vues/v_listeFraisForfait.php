@@ -25,7 +25,7 @@
                 <?php
                 foreach ($lesFraisForfait as $unFrais) {
                     $idFrais = $unFrais['idfrais'];
-                    $libelle = htmlspecialchars($unFrais['libelle']);
+                    $libelle = htmlspecialchars($unFrais['libelle'], ENT_QUOTES);
                     $quantite = $unFrais['quantite']; 
                 ?>
                 <div class="form-group">

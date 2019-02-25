@@ -24,7 +24,7 @@
             foreach ($lesFraisForfait as $unFraisForfait) {
                 $libelle = $unFraisForfait['libelle']; ?>
             <th>
-                <?php echo htmlspecialchars($libelle) ?>
+                <?php echo htmlspecialchars($libelle, ENT_QUOTES) ?>
             </th>
             <?php
             }
@@ -55,7 +55,7 @@
         <?php
         foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
             $date = $unFraisHorsForfait['date'];
-            $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+            $libelle = htmlspecialchars($unFraisHorsForfait['libelle'], ENT_QUOTES);
             $montant = $unFraisHorsForfait['montant'];
             $estRefuse = $unFraisHorsForfait['estRefuse']; ?>
         <tr <?php if ($estRefuse) { ?> style='background-color:red;' <?php } ?>>

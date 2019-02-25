@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label for="lstVisiteurs" accesskey="n">Chercher un nom :</label>
                 <input type="search" name="recherche"
-                    value="<?php echo htmlspecialchars($recherche); ?>"
+                    value="<?php echo htmlspecialchars($recherche, ENT_QUOTES); ?>"
                     placeholder="Rechercher un nom..." class="form-control" />
             </div>
             <input type="submit" value="Rechercher" name="rechercher" 
@@ -37,8 +37,8 @@
                 <select id="lstVisiteurs" name="lstVisiteurs" class="form-control">
                     <?php
                     foreach ($lesVisiteurs as $unVisiteur) { 
-                        $nom = htmlspecialchars($unVisiteur['nom']);
-                        $prenom = htmlspecialchars($unVisiteur['prenom']);
+                        $nom = htmlspecialchars($unVisiteur['nom'], ENT_QUOTES);
+                        $prenom = htmlspecialchars($unVisiteur['prenom'], ENT_QUOTES);
                         
                         if ($unVisiteur['id'] == $idVisiteurASelectionner) { ?>
                             <option selected value="<?php echo $unVisiteur['id'] ?>">

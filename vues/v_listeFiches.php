@@ -29,8 +29,8 @@
                 $numAnnee = $uneFiche['numAnnee'];
                 $numMois = $uneFiche['numMois'];
                 $idVisiteur = $uneFiche['idVisiteur'];
-                $prenom = htmlspecialchars($uneFiche['prenom']);
-                $nom = htmlspecialchars($uneFiche['nom']);
+                $prenom = htmlspecialchars($uneFiche['prenom'], ENT_QUOTES);
+                $nom = htmlspecialchars($uneFiche['nom'], ENT_QUOTES);
 
                 if (($idVisiteur == $idVisiteurSel) && ($mois == $moisSel)) { ?>
                     <option selected value="<?php echo $idVisiteur.'-'.$mois  ?>">

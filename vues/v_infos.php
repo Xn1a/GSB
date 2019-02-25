@@ -16,7 +16,7 @@
 <div class="alert alert-success" role="alert">
     <?php
     foreach ($_REQUEST['infos'] as $message) {
-        echo '<p>' . htmlspecialchars($message) . '</p>';
+        echo '<p>' . htmlspecialchars($message, ENT_QUOTES) . '</p>';
     }
     ?>
 </div>

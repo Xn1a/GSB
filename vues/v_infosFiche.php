@@ -17,9 +17,9 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">Fiche de frais du mois 
-        <?php echo $numMois . '-' . $numAnnee ?> du visiteur <?php echo htmlspecialchars($nomPrenom) ?> : </div>
+        <?php echo $numMois . '-' . $numAnnee ?> du visiteur <?php echo htmlspecialchars($nomPrenom, ENT_QUOTES) ?> : </div>
     <div class="panel-body">
-        <strong><u>Etat :</u></strong> <?php echo htmlspecialchars($libEtat) ?>
+        <strong><u>Etat :</u></strong> <?php echo htmlspecialchars($libEtat, ENT_QUOTES) ?>
         depuis le <?php echo $dateModif ?> <br> 
 
         <?php 
