@@ -19,9 +19,10 @@
  * le nombre de justificatifs, la liste des fiches de l'utilisateurs et les
  * informations sur la fiche (etat, visiteur, mois)
  *
- * @param [type] $pdo : l'objet représentant la base de données
- * @param Int $idVisiteur : l'id du visiteur de la fiche à afficher
- * @param String $leMois : le mois de la fiche à afficher
+ * @param PdoGsb $pdo L'objet représentant la base de données
+ * @param String $idVisiteur L'id du visiteur de la fiche à afficher
+ * @param String $leMois Le mois de la fiche à afficher
+ * 
  * @return void
  */
 function afficherFiche($pdo, $idVisiteur, $leMois)
@@ -54,12 +55,13 @@ function afficherFiche($pdo, $idVisiteur, $leMois)
 }
 
 /**
- * Affiche les informations concernant la fiche (etat, visiteur, mois)
+ * Affiche les informations concernant la fiche (etat, propriétaire, mois)
  *
- * @param [type] $pdo : l'objet représentant la base de données
- * @param Int $idVisiteur : l'id du visiteur de la fiche à afficher
- * @param String $leMois : le mois de la fiche à afficher
- * @return $idEtat : l'id de l'état de la fiche
+ * @param PdoGsb $pdo L'objet représentant la base de données
+ * @param String $idVisiteur ID du visiteur de la fiche à afficher
+ * @param String $leMois Le mois pour lequel on veut afficher la fiche
+ * 
+ * @return String L'id de l'état de la fiche
  */
 function afficherInfosFiche($pdo, $idVisiteur, $leMois)
 {
@@ -80,8 +82,9 @@ function afficherInfosFiche($pdo, $idVisiteur, $leMois)
 /**
  * Récupère le mois selectionné dans la liste
  *
- * @param [type] $pdo : l'objet représentant la base de données
- * @return $leMois : le mois selectionné
+ * @param PdoGsb $pdo L'objet représentant la base de données
+ * 
+ * @return String Le mois qui a été selectionné dans la liste déroulante
  */
 function getMoisSelectionne()
 {
@@ -93,11 +96,13 @@ function getMoisSelectionne()
 }
 
 /**
- * Initialise la liste des visiteurs (liste des visiteurs,
- * visiteur sélectionné antérieurement, recherche)
+ * Initialise la liste des visiteurs :  retourne la liste des visiteurs 
+ * en fonction de la recherche (si il y en a eu) et selectionne le visiteur
+ * déjà sélectionné au paravant (si il y en a eu) 
  *
- * @param $pdo : l'objet représentant la base de données
- * @return $lesVisiteurs : un tableau contenant la liste des visiteurs mais
+ * @param PdoGsb $pdo L'objet représentant la base de données
+ * 
+ * @return Array Un tableau contenant la liste des visiteurs mais
  * aussi l'id du visiteur sélectionné
  */
 function initialiserListeVisiteurs($pdo)

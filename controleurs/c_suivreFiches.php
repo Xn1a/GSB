@@ -17,9 +17,10 @@
 /**
  * Affiche la fiche : infos et frais
  *
- * @param [type] $pdo : objet représentant la base de données
- * @param Int $idVisiteurSel : id du visiteur de la fiche à afficher
- * @param String $moisSel : mois de la fiche à afficher
+ * @param PdoGsb $pdo L'objet représentant la base de données
+ * @param String $idVisiteurSel Id du visiteur de la fiche à afficher
+ * @param String $moisSel Mois selectionné (mois de la fiche à afficher)
+ * 
  * @return void
  */
 function afficherFiche($pdo, $idVisiteurSel, $moisSel)
@@ -46,11 +47,12 @@ function afficherFiche($pdo, $idVisiteurSel, $moisSel)
 }
 
 /**
- * Affiche la liste des fiches dans une liste déroulante : mois, année, nom, prenom
+ * Affiche la liste de toutes les fiches "validées" dans une liste déroulante (mois, année, nom, prenom)
  *
- * @param [type] $pdo : objet représentant la base de donnée
- * @param Int $idVisiteurSel
- * @param String $moisSel : sous la forme aaaamm
+ * @param PdoGsb $pdo L'objet représentant la base de donnée
+ * @param String $idVisiteurSel ID du visiteur sélectionné si il y en a
+ * @param String $moisSel Mois selectionné si il y en a (aaaamm)
+ * 
  * @return void
  */
 function afficherListeFiches($pdo, $idVisiteurSel = null, $moisSel = null)
