@@ -17,7 +17,7 @@
 /**
  * Teste si un quelconque Utilisateur est connecté
  *
- * @return vrai ou faux
+ * @return Boolean
  */
 function estConnecte()
 {
@@ -30,8 +30,9 @@ function estConnecte()
  * @param String $idVisiteur ID du Utilisateur
  * @param String $nom        Nom du Utilisateur
  * @param String $prenom     Prénom du Utilisateur
+ * @param Int $fonction Fonction de l'utilisateur (0 pour visiteur et 1 pour comptable)
  *
- * @return null
+ * @return void
  */
 function connecter($idUtilisateur, $nom, $prenom, $fonction)
 {
@@ -44,7 +45,7 @@ function connecter($idUtilisateur, $nom, $prenom, $fonction)
 /**
  * Détruit la session active
  *
- * @return null
+ * @return void
  */
 function deconnecter()
 {
@@ -193,7 +194,7 @@ function lesQteFraisValides($lesFrais)
  * @param String $libelle   Libellé des frais
  * @param Float  $montant   Montant des frais
  *
- * @return null
+ * @return void
  */
 function valideInfosFrais($dateFrais, $libelle, $montant)
 {
@@ -225,7 +226,7 @@ function valideInfosFrais($dateFrais, $libelle, $montant)
  *
  * @param String $msg Libellé de l'erreur
  *
- * @return null
+ * @return void
  */
 function ajouterErreur($msg)
 {
@@ -240,7 +241,7 @@ function ajouterErreur($msg)
  *
  * @param String $msg Libellé du message d'information
  *
- * @return null
+ * @return void
  */
 function ajouterInfo($msg)
 {
@@ -253,7 +254,7 @@ function ajouterInfo($msg)
 /**
  * Retoune le nombre de lignes du tableau des erreurs
  *
- * @return Integer le nombre d'erreurs
+ * @return Integer Le nombre d'erreurs
  */
 function nbErreurs()
 {

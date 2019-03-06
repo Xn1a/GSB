@@ -1,6 +1,6 @@
 <?php
 /**
- * Suivi du paiement des fiches par les comptables
+ * Suivi du paiement des fiches de frais par les comptables
  *
  * PHP Version 7
  *
@@ -13,6 +13,53 @@
  * @version   GIT: <0>
  * @link      http://www.reseaucerta.org Contexte « Laboratoire GSB »
  */
+
+/**
+ * Affiche la fiche : infos et frais
+ *
+ * @param PdoGsb $pdo L'objet représentant la base de données
+ * @param String $idVisiteurSel Id du visiteur de la fiche à afficher
+ * @param String $moisSel Mois selectionné (mois de la fiche à afficher)
+ * 
+ * @return void
+ */
+function afficherFiche($pdo, $idVisiteurSel, $moisSel)
+{
+    // Récupération des frais
+    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteurSel, $moisSel);
+    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteurSel, $moisSel);
+
+    // Récupération des informations sur la fiche
+    $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteurSel, $moisSel);
+    $numAnnee = substr($moisSel, 0, 4);
+    $numMois = substr($moisSel, 4, 2);
+    $libEtat = $lesInfosFicheFrais['libEtat'];
+    $montantValide = $lesInfosFicheFrais['montantValide'];
+    $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
+    $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
+    $etat = $lesInfosFicheFrais['idEtat'];
+
+    // Récupération des informations sur le visiteur
+    $infosUtilisateur = $pdo->getInfosUtilisateurParId($idVisiteurSel);
+    $nomPrenom = $infosUtilisateur['prenom'] . ' ' . $infosUtilisateur['nom'];
+
+    include 'vues/v_etatFrais.php';
+}
+
+/**
+ * Affiche la liste de toutes les fiches "validées" dans une liste déroulante (mois, année, nom, prenom)
+ *
+ * @param PdoGsb $pdo L'objet représentant la base de donnée
+ * @param String $idVisiteurSel ID du visiteur sélectionné si il y en a
+ * @param String $moisSel Mois selectionné si il y en a (aaaamm)
+ * 
+ * @return void
+ */
+function afficherListeFiches($pdo, $idVisiteurSel = null, $moisSel = null)
+{
+    $lesFiches = $pdo->getLesFichesValidees();
+    include 'vues/v_listeFiches.php';
+}
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
@@ -29,8 +76,7 @@ switch ($action) {
             $idVisiteurSel = $fiche[0];
             afficherListeFiches($pdo, $idVisiteurSel, $moisSel);
             afficherFiche($pdo, $idVisiteurSel, $moisSel);
-        }
-        else {
+        } else {
             afficherListeFiches($pdo);
         }
         break;
@@ -65,33 +111,8 @@ switch ($action) {
 
         afficherFiche($pdo, $idVisiteurSel, $moisSel);
         break;
-}
 
-function afficherListeFiches($pdo, $idVisiteurSel = null, $moisSel = null)
-{
-    $lesFiches = $pdo->getLesFichesValidees();
-    include 'vues/v_listeFiches.php';
-}
-
-function afficherFiche($pdo, $idVisiteurSel, $moisSel)
-{
-    // Récupération des frais
-    $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteurSel, $moisSel);
-    $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteurSel, $moisSel);
-
-    // Récupération des informations sur la fiche
-    $lesInfosFicheFrais = $pdo->getLesInfosFicheFrais($idVisiteurSel, $moisSel);
-    $numAnnee = substr($moisSel, 0, 4);
-    $numMois = substr($moisSel, 4, 2);
-    $libEtat = $lesInfosFicheFrais['libEtat'];
-    $montantValide = $lesInfosFicheFrais['montantValide'];
-    $nbJustificatifs = $lesInfosFicheFrais['nbJustificatifs'];
-    $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
-    $etat = $lesInfosFicheFrais['idEtat'];
-
-    // Récupération des informations sur le visiteur
-    $infosUtilisateur = $pdo->getInfosUtilisateurParId($idVisiteurSel);
-    $nomPrenom = $infosUtilisateur['prenom'] . ' ' . $infosUtilisateur['nom'];
-
-    include 'vues/v_etatFrais.php';
+    default:
+        afficherListeFiches($pdo);
+        break;
 }

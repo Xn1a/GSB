@@ -6,7 +6,7 @@
  *
  * @category  PPE
  * @package   GSB
- * @author    Pauline Gaonac'h <xn1a@protonmail.com>
+ * @author    Pauline Gaonac'h <pauline.gaod@gmail.com>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
@@ -16,7 +16,7 @@
 <div class="alert alert-success" role="alert">
     <?php
     foreach ($_REQUEST['infos'] as $message) {
-        echo '<p>' . htmlspecialchars($message) . '</p>';
+        echo '<p>' . htmlspecialchars($message, ENT_QUOTES) . '</p>';
     }
     ?>
 </div>

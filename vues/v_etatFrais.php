@@ -23,8 +23,10 @@
             <?php
             foreach ($lesFraisForfait as $unFraisForfait) {
                 $libelle = $unFraisForfait['libelle']; ?>
-                <th> <?php echo htmlspecialchars($libelle) ?></th>
-                <?php
+            <th>
+                <?php echo htmlspecialchars($libelle, ENT_QUOTES) ?>
+            </th>
+            <?php
             }
             ?>
         </tr>
@@ -32,63 +34,72 @@
             <?php
             foreach ($lesFraisForfait as $unFraisForfait) {
                 $quantite = $unFraisForfait['quantite']; ?>
-                <td class="qteForfait"><?php echo $quantite ?> </td>
-                <?php
+            <td class="qteForfait">
+                <?php echo $quantite ?>
+            </td>
+            <?php
             }
             ?>
         </tr>
     </table>
 </div>
 <div class="panel panel-info">
-    <div class="panel-heading">Descriptif des éléments hors forfait - 
+    <div class="panel-heading">Descriptif des éléments hors forfait -
         <?php echo $nbJustificatifs ?> justificatifs reçus</div>
     <table class="table table-bordered table-responsive">
         <tr>
             <th class="date">Date</th>
             <th class="libelle">Libellé</th>
-            <th class='montant'>Montant</th>                
+            <th class='montant'>Montant</th>
         </tr>
         <?php
         foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
             $date = $unFraisHorsForfait['date'];
-            $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
+            $libelle = htmlspecialchars($unFraisHorsForfait['libelle'], ENT_QUOTES);
             $montant = $unFraisHorsForfait['montant'];
             $estRefuse = $unFraisHorsForfait['estRefuse']; ?>
-            <tr  <?php if ($estRefuse) {
-                    echo "style='background-color:red;'";
-                } ?> 
-            >
-                <td><?php echo $date ?></td>
-                <td><?php echo $libelle ?></td>
-                <td><?php echo $montant ?></td>
-            </tr>
-            <?php
+        <tr <?php if ($estRefuse) { ?> style='background-color:red;' <?php } ?>>
+            <td>
+                <?php echo $date ?>
+            </td>
+            <td>
+                <?php echo $libelle ?>
+            </td>
+            <td>
+                <?php echo $montant ?>
+            </td>
+        </tr>
+        <?php
         }
         ?>
     </table>
 </div>
-<?php if ($_SESSION['fonction'] == 'Comptable' && $etat == 'VA') { ?>
-    <form method="post" 
-            action="index.php?uc=suivreFiches&action=mettreEnPaiement" 
-            role="form">
-        <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
-        <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
-        <button class="btn btn-info" type="submit"
-        <?php
-        if (getdate()['mday'] < 20) { 
-            echo 'disabled';
-        }
-        ?>
-        >Mettre en paiement</button>
-    </form>
-<?php } ?>
+<?php 
+if (($_SESSION['fonction'] == 'Comptable') && ($etat == 'VA')) { ?>
+<form method="post" action="index.php?uc=suivreFiches&action=mettreEnPaiement"
+    role="form">
+    <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
+    <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
+    <button class="btn btn-info" type="submit"
+        <?php 
+        if (getdate()['mday'] < 20) {
+            echo 'disabled'; 
+        } ?>
+        >Mettre en paiement
+    </button>
+</form>
+<?php 
+} 
+?>
 
-<?php if ($_SESSION['fonction'] == 'Comptable' && $etat == 'MP') { ?>
-    <form method="post" 
-            action="index.php?uc=suivreFiches&action=mettreARemboursee" 
-            role="form">
-        <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
-        <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
-        <button class="btn btn-success" type="submit">Remboursée</button>
-    </form>
-<?php } ?>
+<?php 
+if (($_SESSION['fonction'] == 'Comptable') && ($etat == 'MP')) { ?>
+<form method="post" action="index.php?uc=suivreFiches&action=mettreARemboursee"
+    role="form">
+    <input type="hidden" name="mois" value="<?php echo $moisSel ?>">
+    <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
+    <button class="btn btn-success" type="submit">Remboursée</button>
+</form>
+<?php 
+} 
+?>
