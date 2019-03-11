@@ -1,2 +1,4 @@
 doc
 phpDocumentor.phar
+.vscode
+.phpunit.result.cache
