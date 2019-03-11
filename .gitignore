@@ -2,3 +2,7 @@ doc
 phpDocumentor.phar
 .vscode
 .phpunit.result.cache
+composer.json
+composer.lock
+vendor
+ArchitectureApplicativeMVC.docx
