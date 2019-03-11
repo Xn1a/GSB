@@ -145,11 +145,12 @@ class PdoGsb
      * Récupère la liste des montants des frais forfait d'une fiche
      *
      * @param String $idVisiteur ID du visiteur à qui appartient la fiche
-     * @param String $mois Mois auquel correspond la fiche (sous la forme aaaamm)
+     * @param String $mois       Mois auquel correspond la fiche (aaaamm)
      *
      * @return Array La liste des montants des frais forfait
      */
-    public function getLesMontantsFraisForfait($idVisiteur, $mois) {
+    public function getLesMontantsFraisForfait($idVisiteur, $mois) 
+    {
         $requetePrepare = PdoGsb::$monPdo->prepare(
             'SELECT fraisforfait.montant, lignefraisforfait.quantite FROM fraisforfait '
             . 'JOIN lignefraisforfait ON idfraisforfait = fraisforfait.id '
@@ -165,7 +166,6 @@ class PdoGsb
         for ($i = 0; $i < count($lesLignes); $i++) {
             $lesMontants[$i] = $lesLignes[$i]['montant'] * $lesLignes[$i]['quantite']; 
         }
-
         return $lesMontants;
     }
 
@@ -195,7 +195,6 @@ class PdoGsb
             $lesMontants[$i] = (float) $lesLignes[$i]['montant']; 
 
         }
-
         return $lesMontants;
     }
 

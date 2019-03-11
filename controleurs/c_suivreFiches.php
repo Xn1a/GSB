@@ -47,7 +47,8 @@ function afficherFiche($pdo, $idVisiteurSel, $moisSel)
 }
 
 /**
- * Affiche la liste de toutes les fiches "validées" dans une liste déroulante (mois, année, nom, prenom)
+ * Affiche la liste de toutes les fiches "validées" dans une liste déroulante 
+ * (mois, année, nom, prenom)
  *
  * @param PdoGsb $pdo L'objet représentant la base de donnée
  * @param String $idVisiteurSel ID du visiteur sélectionné si il y en a

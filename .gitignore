@@ -1,2 +1,3 @@
 doc
 phpDocumentor.phar
+.phpunit.result.cache
