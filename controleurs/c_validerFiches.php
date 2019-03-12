@@ -1,13 +1,13 @@
 <?php
 /**
- * Validation d'une fiche de frais
+ * Validation d'une fiche de frais par les comptables
  *
  * PHP Version 7
  *
  * @category  PPE
  * @package   GSB
  * @author    Réseau CERTA <contact@reseaucerta.org>
- * @author    Pauline Gaonac'h <pauline.gaod@gmail.com
+ * @author    Pauline Gaonac'h <pauline.gaod@gmail.com>
  * @copyright 2017 Réseau CERTA
  * @license   Réseau CERTA
  * @version   GIT: <0>
@@ -17,7 +17,7 @@
 /**
  * Affiche le contenu de la fiche : les frais forfaits, les frais hors forfait,
  * le nombre de justificatifs, la liste des fiches de l'utilisateurs et les
- * informations sur la fiche (etat, visiteur, mois)
+ * informations sur la fiche (etat, propriétaire, mois)
  *
  * @param PdoGsb $pdo L'objet représentant la base de données
  * @param String $idVisiteur L'id du visiteur de la fiche à afficher
