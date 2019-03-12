@@ -82,9 +82,9 @@ if (($_SESSION['fonction'] == 'Comptable') && ($etat == 'VA')) { ?>
     <input type="hidden" name="idVisiteur" value="<?php echo $idVisiteurSel ?>">
     <button class="btn btn-info" type="submit"
         <?php 
-        // Si on est pas encore au moins au 20 du mois de la fiche 
-        // on désactive le bouton
-        if ((getdate()['mday'] < 20) && (getdate()['mon'] == $numMois) 
+        // Si on est pas encore au moins au 20 du mois suivant
+        // le mois de la fiche on désactive le bouton
+        if ((getdate()['mday'] < 20) && (getdate()['mon'] == $numMois+1) 
                 && (getdate()['year'] == $numAnnee)) {
             echo 'disabled';
         } 
