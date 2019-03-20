@@ -100,13 +100,52 @@ class PdoGsb
     public function getInfosUtilisateurParId($id)
     {
         $requetePrepare = PdoGsb::$monPdo->prepare(
-            'SELECT utilisateur.nom AS nom, '
+            'SELECT utilisateur.id AS id, utilisateur.nom AS nom, '
             . 'utilisateur.prenom AS prenom, '
             . 'utilisateur.fonction AS fonction '
             . 'FROM utilisateur '
             . 'WHERE utilisateur.id = :unId'
         );
         $requetePrepare->bindParam(':unId', $id, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        return $requetePrepare->fetch();
+    }
+
+    /**
+     * Retourne les informations d'un utilisateur
+     *
+     * @param String $login Le login de l'utilisateur
+     *
+     * @return Array La fonction, le nom et le prénom sous la forme d'un tableau associatif
+     */
+    public function getInfosUtilisateurParLogin($login)
+    {
+        $requetePrepare = PdoGsb::$monPdo->prepare(
+            'SELECT utilisateur.id AS id, utilisateur.nom AS nom, '
+            . 'utilisateur.prenom AS prenom, '
+            . 'utilisateur.fonction AS fonction '
+            . 'FROM utilisateur '
+            . 'WHERE utilisateur.login = :login'
+        );
+        $requetePrepare->bindParam(':login', $login, PDO::PARAM_STR);
+        $requetePrepare->execute();
+        return $requetePrepare->fetch();
+    }
+
+     /**
+     * Retourne le mot de passe haché de l'utilisateur
+     *
+     * @param String $login Le login de l'utilisateur
+     *
+     * @return Array Le mot de passe haché (tableau associatif)
+     */
+    public function getMdpUtilisateurPourLogin($login)
+    {
+        $requetePrepare = PdoGsb::$monPdo->prepare(
+            'SELECT mdp FROM utilisateur '
+            . 'WHERE utilisateur.login = :login'
+        );
+        $requetePrepare->bindParam(':login', $login, PDO::PARAM_STR);
         $requetePrepare->execute();
         return $requetePrepare->fetch();
     }
