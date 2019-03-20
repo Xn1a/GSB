@@ -26,24 +26,41 @@ switch ($action) {
     case 'valideConnexion':
         $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
         $mdp = filter_input(INPUT_POST, 'mdp', FILTER_SANITIZE_STRING);
-        $utilisateur = $pdo->getInfosUtilisateur($login, $mdp);
-        if (!is_array($utilisateur)) {
+
+        $mdpHash = $pdo->getMdpUtilisateurPourLogin($login)['mdp'];
+
+        if ($mdpHash != null) {
+            if (password_verify($mdp, $mdpHash)) {
+                $utilisateur = $pdo->getInfosUtilisateurParLogin($login);
+                if (!is_array($utilisateur)) {
+                    ajouterErreur('Login ou mot de passe incorrect');
+                    include 'vues/v_erreurs.php';
+                    include 'vues/v_connexion.php';
+                } else {
+                    $id = $utilisateur['id'];
+                    $nom = $utilisateur['nom'];
+                    $prenom = $utilisateur['prenom'];
+        
+                    // Met la fonction de l'utilisateur dans la session
+                    $fonction = "Visiteur";
+                    if ($utilisateur['fonction'] == 1) {
+                        $fonction = "Comptable";
+                    }
+        
+                    connecter($id, $nom, $prenom, $fonction);
+                    header('Location: index.php');
+                }
+            }
+            else {
+                ajouterErreur('Login ou mot de passe incorrect');
+                include 'vues/v_erreurs.php';
+                include 'vues/v_connexion.php';
+            }
+        }
+        else {
             ajouterErreur('Login ou mot de passe incorrect');
             include 'vues/v_erreurs.php';
             include 'vues/v_connexion.php';
-        } else {
-            $id = $utilisateur['id'];
-            $nom = $utilisateur['nom'];
-            $prenom = $utilisateur['prenom'];
-
-            // Met la fonction de l'utilisateur dans la session
-            $fonction = "Visiteur";
-            if ($utilisateur['fonction'] == 1) {
-                $fonction = "Comptable";
-            }
-
-            connecter($id, $nom, $prenom, $fonction);
-            header('Location: index.php');
         }
         break;
     default:
