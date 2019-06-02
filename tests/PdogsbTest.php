@@ -20,7 +20,7 @@ class PdoGsbTest extends TestCase {
 
     protected function setUp() : void 
     {
-        include_once "/var/www/html/GSB_AppliMVC/includes/class.pdogsb.inc.php";
+        include_once "/var/www/html/gsb-web/includes/class.pdogsb.inc.php";
         $this->pdo = PdoGsb::getPdoGsb();
     }
 
@@ -28,7 +28,7 @@ class PdoGsbTest extends TestCase {
     {
         return [
             ['a17', 'David', 'Andre', '0'],
-            ['a200', 'Mathias', 'Cohen', '1'],
+            ['a2', 'Mathias', 'Cohen', '1'],
             ['c54', 'Michel', 'Debelle', '0']
         ];
     }
